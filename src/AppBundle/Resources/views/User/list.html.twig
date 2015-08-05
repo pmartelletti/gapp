@@ -1,0 +1,190 @@
+{% extends "AppBundle:Admin:layout.html.twig" %}
+
+{% block header %}
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#00693E">
+    <tr>
+      <td width="11"><img src="{{ asset('bundles/app/images/admin/fondo-tit1.gif') }}" width="11" height="57"></td>
+      <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="15">&nbsp;</td>
+          <td class="titulo3">Lista de usuarios </td>
+          <td width="160"><table width="160" height="27" border="0" cellpadding="0" cellspacing="0" bgcolor="#01482B">
+            <tr>
+              <td width="7"><img src="{{ asset('bundles/app/images/admin/fondo-menu1.gif') }}" width="7" height="27"></td>
+              <td width="34"><div align="center"><img src="{{ asset('bundles/app/images/admin/ico-crear-usuarios.gif') }}" width="14" height="14"></div></td>
+              <td><div align="center" class="linkverdana11BcoB">
+                <div align="left"><a href="{{ path('user_new') }}" class="linkverdana11BcoB">CREAR USUARIO </a></div>
+              </div></td>
+              <td width="7"><img src="{{ asset('bundles/app/images/admin/fondo-menu2.gif') }}" width="7" height="27"></td>
+            </tr>
+          </table></td>
+          <td width="20">&nbsp;</td>
+          <td width="88"><table width="88" height="27" border="0" cellpadding="0" cellspacing="0" bgcolor="#01482B">
+            <tr>
+              <td width="7"><img src="{{ asset('bundles/app/images/admin/fondo-menu1.gif') }}" width="7" height="27"></td>
+              <td width="25"><div align="center"><img src="{{ asset('bundles/app/images/admin/ico-flecha.gif') }}" width="5" height="10"></div></td>
+              <td><div align="center" class="linkverdana11BcoB">
+                  <div align="left"><a href="{{ path('admin_menu') }}" class="linkverdana11BcoB">MENU</a></div>
+              </div></td>
+              <td width="7"><img src="{{ asset('bundles/app/images/admin/fondo-menu2.gif') }}" width="7" height="27"></td>
+            </tr>
+          </table></td>
+          <td width="10">&nbsp;</td>
+        </tr>
+      </table></td>
+      <td width="11"><img src="{{ asset('bundles/app/images/admin/fondo-tit2.gif') }}" width="11" height="57"></td>
+    </tr>
+</table>    
+{% endblock header%} 
+
+
+{% block search %}
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td width="174"><table width="174" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="40" valign="bottom"><div align="center">
+            <input type="checkbox" name="checkbox22" value="checkbox">
+          </div></td>
+          <td width="134" class="textobaseVerdeB">Seleccionar todos</td>
+        </tr>
+      </table></td>
+      <td width="166"><select name="example2" size="1" class="celda7" style="font-family: Verdana; font-size: 11px" onChange="showtext(scrollbars=yes,width=600,height=500 )">
+        <option>Filtrar por Zona</option>
+        <option>x</option>
+        <option>x</option>
+        <option>x</option>
+
+      </select></td>
+      <td width="168"><select name="example" size="1" class="celda7" style="font-family: Verdana; font-size: 11px" onChange="showtext(scrollbars=yes,width=600,height=500 )">
+        <option>Filtrar por Tipo</option>
+        <option>Cliente</option>
+        <option>Distribuidor</option>
+        <option>Redistribuidor</option>
+         <option>otros</option>
+
+      </select></td>
+      <td width="166"><select name="example3" size="1" class="celda7" style="font-family: Verdana; font-size: 11px" onChange="showtext(scrollbars=yes,width=600,height=500 )">
+        <option>Filtrar por Tipo</option>
+        <option>Cliente</option>
+        <option>Distribuidor</option>
+        <option>Redistribuidor</option>
+        <option>otros</option>
+      </select></td>
+      <td width="216"><table width="215" border="0" align="right" cellpadding="0" cellspacing="0">
+        <tr>
+          <td><span class="textoBase">
+            <input name="nombre" type="text" class="celda7" id="nombre" maxlength="256">
+          </span></td>
+          <td><a href="#" class="linkverdana11Verde2B">BUSCAR</a></td>
+        </tr>
+      </table></td>
+    </tr>
+</table>
+{% endblock search%}
+
+{% block body %}
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+      <td valign="top">
+        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td colspan="11" bgcolor="#00693E"><img src="{{ asset('bundles/app/images/admin/1pix.gif') }}" width="1" height="1"></td>
+            </tr>
+            <tr>
+              <td width="42" height="45" bgcolor="#EAE9D7" class="textobaseVerdeB">&nbsp;</td>
+              <td width="154" bgcolor="#EAE9D7" class="textobaseVerdeB">NOMBRE</td>
+              <td width="5" bgcolor="#EAE9D7" class="textobaseVerdeB">&nbsp;</td>
+              <td width="89" bgcolor="#EAE9D7" class="textobaseVerdeB">ZONA</td>
+              <td width="120" bgcolor="#EAE9D7" class="textobaseVerdeB">PROVINCIA</td>
+              <td width="16" bgcolor="#EAE9D7" class="textobaseVerdeB">&nbsp;</td>
+              <td width="224" bgcolor="#EAE9D7" class="textobaseVerdeB">E-MAIL</td>
+              <td width="16" bgcolor="#EAE9D7" class="textobaseVerdeB">&nbsp;</td>
+              <td width="96" bgcolor="#EAE9D7" class="textobaseVerdeB"><div align="left">TIPO</div></td>
+              <td width="65" bgcolor="#EAE9D7" class="textobaseVerdeB"><div align="center">EDITAR</div></td>
+              <td width="63" bgcolor="#EAE9D7" class="textobaseVerdeB"><div align="center">BORRAR</div></td>
+            </tr>
+            <tr>
+              <td colspan="11" bgcolor="#00693E"><img src="{{ asset('bundles/app/images/admin/1pix.gif') }}" width="1" height="1"></td>
+            </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+        <td height="100%" valign="top">
+            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                  <td>
+                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                        <tr>
+                          <td width="45" height="35"><div align="center">
+                            <input type="checkbox" name="checkbox2" value="checkbox">
+                          </div></td>
+                          <td width="150" class="textoBase">Bourlot Julio <br></td>
+                          <td width="6" class="textoBase">&nbsp;</td>
+                          <td width="89"><span class="textoBase"> NOA</span></td>
+                          <td width="120" class="textoBase">Entre R&iacute;os</td>
+                          <td width="15">&nbsp;</td>
+                          <td width="225"><a href="mailto:forrajeranorte@yahoo.com.ar" class="linkverdana11Gris2">forrajeranorte@yahoo.com.ar</a></td>
+                          <td width="17">&nbsp;</td>
+                          <td width="96" class="textoBase">Distribuidor</td>
+                          <td width="65"><div align="center"><img src="{{ asset('bundles/app/images/admin/ico-editar.gif') }}" width="13" height="13"></div></td>
+                          <td width="62"><div align="center"><img src="{{ asset('bundles/app/images/admin/ico-eliminar.gif') }}" width="14" height="14"></div></td>
+                        </tr>
+                        <tr>
+                          <td height="1" colspan="11" bgcolor="#B3B3B3"><img src="{{ asset('bundles/app/images/admin/1pix.gif') }}" width="1" height="1"></td>
+                        </tr>
+                    </table>
+                  </td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                </tr>
+            </table>
+
+        </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+    <tr>
+      <td>
+        <table width="140" border="0" align="right" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="21"><img src="{{ asset('bundles/app/images/admin/ico-flecha2.gif') }}" width="21" height="9"></td>
+              <td><div align="center"><a href="#" class="linkverdana11Verde">1</a></div></td>
+              <td><div align="center"><a href="#" class="linkverdana11Verde">2</a></div></td>
+              <td><div align="center" class="textobaseVerdeB">3</div></td>
+              <td><div align="center"><a href="#" class="linkverdana11Verde">4</a></div></td>
+              <td><div align="center"><a href="#" class="linkverdana11Verde">5</a></div></td>
+              <td width="21"><img src="{{ asset('bundles/app/images/admin/ico-flecha3.gif') }}" width="21" height="9"></td>
+            </tr>
+        </table>
+      </td>
+    </tr>
+</table>
+{% endblock body%}

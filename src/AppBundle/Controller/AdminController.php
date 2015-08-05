@@ -8,11 +8,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class AdminController extends Controller
 {
     /**
-     * @Route("/admin", name="admin_index")
+     * @Route("/login", name="login")
      */
-    public function indexAction()
+    public function loginAction()
     {
-        return $this->render('AppBundle:Admin:index.html.twig');
+        return $this->render('AppBundle:Admin:login.html.twig');
     }
+    
+    /**
+     * @Route("/admin/menu", name="admin_menu")
+     */
+    public function menuAction()
+    {
+        return $this->render('AppBundle:Admin:menu.html.twig');
+    }        
 }
 

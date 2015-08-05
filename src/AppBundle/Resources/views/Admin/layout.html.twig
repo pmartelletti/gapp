@@ -1,0 +1,98 @@
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+    <title>Gapp - Administrador de &Aacute;rea Distribuidores</title>
+    <style type="text/css">
+    <!--
+    body {
+            margin-left: 0px;
+            margin-top: 0px;
+            margin-right: 0px;
+            margin-bottom: 0px;
+    }
+    -->
+    </style>
+    <link href="{{asset('bundles/app/css/admin/estilos.css') }}" rel="stylesheet" type="text/css">
+</head>
+<body>
+<table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#F1F1F1" id="table1">
+    <tr>
+        <td height="100%">
+            <table width="980" height="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+            <tr>
+                <td height="20" colspan="3" valign="top" bgcolor="#F1F1F1">&nbsp;</td>
+            </tr>
+            <tr>
+                <td width="25" valign="top"><img src="{{ asset('bundles/app/images/admin/borde1.gif') }}" width="25" height="25"></td>
+                <td height="12" background="{{ asset('bundles/app/images/admin/lado1.gif') }}">&nbsp;</td>
+                <td width="25" valign="top"><img src="{{ asset('bundles/app/images/admin/borde2.gif') }}" width="25" height="25"></td>
+            </tr>
+            <tr>
+                <td background="{{ asset('bundles/app/images/admin/lado4.gif') }}">&nbsp;</td>
+                <td valign="top">
+                    <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
+                        <tr>
+                            <td width="20" rowspan="7">&nbsp;</td>
+                            <td height="15"><img src="{{ asset('bundles/app/images/admin/1pix.gif') }}" width="1" height="1"></td>
+                            <td width="20" rowspan="7">&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td height="75" valign="top">
+                                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                    <tr>
+                                      <td valign="top"><img src="{{ asset('bundles/app/images/admin/logo.gif') }}" width="184" height="55"></td>
+                                      <td><div align="right"><img src="{{ asset('bundles/app/images/admin/tit-administrador2.gif') }}" width="210" height="46"></div></td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {% block header %}
+                                {% endblock header%}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="75">
+                                {% block search %}
+                                {% endblock search%}
+                            </td>
+                        </tr>
+                        <tr>
+                            <td height="100%" valign="top">
+                                {% block body %}
+                                {% endblock body%}
+                            </td>
+                        </tr>
+                        <tr>
+                          <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                          <td height="30" valign="top"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            <tr>
+                              <td height="1" bgcolor="#00693E"><img src="{{ asset('bundles/app/images/admin/1pix.gif') }}" width="1" height="1"></td>
+                            </tr>
+                            <tr>
+                              <td height="25" valign="bottom"><div align="right"><a href="http://www.gapp.com.ar" target="_blank" class="linkverdana11Verde">www.gapp.com.ar<img src="{{ asset('bundles/app/images/admin/divide.gif') }}" width="22" height="5" border="0"></a><a href="http://www.gapp.com.ar/distribuidores" target="_blank" class="linkverdana11Verde">www.gapp.com.ar/distribuidores</a></div></td>
+                            </tr>
+                          </table></td>
+                        </tr>
+                    </table>
+                </td>
+                <td background="{{ asset('bundles/app/images/admin/lado2.gif') }}">&nbsp;</td>
+            </tr>
+            <tr>
+                <td valign="bottom"><img src="{{ asset('bundles/app/images/admin/borde4.gif') }}" width="25" height="25"></td>
+                <td height="13" background="{{ asset('bundles/app/images/admin/lado3.gif') }}">&nbsp;</td>
+                <td valign="bottom"><img src="{{ asset('bundles/app/images/admin/borde3.gif') }}" width="25" height="25"></td>
+            </tr>
+            <tr>
+                <td height="20" colspan="3" valign="bottom" bgcolor="#F1F1F1">&nbsp;</td>
+            </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</body>
+
+</html>
