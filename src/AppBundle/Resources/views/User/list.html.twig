@@ -39,48 +39,55 @@
 
 
 {% block search %}
-<table width="100%" border="0" cellpadding="0" cellspacing="0">
-    <tr>
-      <td width="174"><table width="174" border="0" cellspacing="0" cellpadding="0">
+<form action="{{ path('user_list') }}" method="GET" >    
+    <table width="100%" border="0" cellpadding="0" cellspacing="0">
         <tr>
-          <td width="40" valign="bottom"><div align="center">
-            <input type="checkbox" name="checkbox22" value="checkbox">
-          </div></td>
-          <td width="134" class="textobaseVerdeB">Seleccionar todos</td>
+          <td width="174"><table width="174" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+              <td width="40" valign="bottom"><div align="center">
+                <input type="checkbox" name="checkbox22" value="checkbox">
+              </div></td>
+              <td width="134" class="textobaseVerdeB">Seleccionar todos</td>
+            </tr>
+          </table></td>
+          <td width="166">
+                <select name="s_zona" size="1" class="celda7" style="font-family: Verdana; font-size: 11px" onChange="showtext(scrollbars=yes,width=600,height=500 )">
+                    {% for k, z in zona %}
+                        <option {%if(s_zona == k) %} selected="selected" {% endif %} value="{{ k }}">{{ z }}</option>
+                    {% endfor %}
+                </select>
+          </td>
+          <td width="168">
+                <select name="s_type" size="1" class="celda7" style="font-family: Verdana; font-size: 11px" onChange="showtext(scrollbars=yes,width=600,height=500 )">
+                    {% for k, t in type %}
+                        <option {%if(s_type == k) %} selected="selected" {% endif %} value="{{ k }}">{{ t }}</option>
+                    {% endfor %}
+                </select>
+          </td>
+          <td width="166">
+              <select name="s_province" size="1" class="celda7" style="font-family: Verdana; font-size: 11px" onChange="showtext(scrollbars=yes,width=600,height=500 )">
+                    {% for k, p in province %}
+                        <option {%if(s_province == k) %} selected="selected" {% endif %} value="{{ k }}">{{ p }}</option>
+                    {% endfor %}
+              </select>
+          </td>
+          <td width="216">
+              <table width="215" border="0" align="right" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td>
+                      <span class="textoBase">
+                        <input name="s_name" type="text" value="{{ s_name }}" class="celda7" id="nombre" maxlength="256">
+                      </span>
+                  </td>
+                  <td>
+                      <input type="submit" value="BUSCAR" class="linkverdana11Verde2B" style="height: 27px; width: 80px;"/>
+                  </td>
+                </tr>
+              </table>
+          </td>
         </tr>
-      </table></td>
-      <td width="166"><select name="example2" size="1" class="celda7" style="font-family: Verdana; font-size: 11px" onChange="showtext(scrollbars=yes,width=600,height=500 )">
-        <option>Filtrar por Zona</option>
-        <option>x</option>
-        <option>x</option>
-        <option>x</option>
-
-      </select></td>
-      <td width="168"><select name="example" size="1" class="celda7" style="font-family: Verdana; font-size: 11px" onChange="showtext(scrollbars=yes,width=600,height=500 )">
-        <option>Filtrar por Tipo</option>
-        <option>Cliente</option>
-        <option>Distribuidor</option>
-        <option>Redistribuidor</option>
-         <option>otros</option>
-
-      </select></td>
-      <td width="166"><select name="example3" size="1" class="celda7" style="font-family: Verdana; font-size: 11px" onChange="showtext(scrollbars=yes,width=600,height=500 )">
-        <option>Filtrar por Tipo</option>
-        <option>Cliente</option>
-        <option>Distribuidor</option>
-        <option>Redistribuidor</option>
-        <option>otros</option>
-      </select></td>
-      <td width="216"><table width="215" border="0" align="right" cellpadding="0" cellspacing="0">
-        <tr>
-          <td><span class="textoBase">
-            <input name="nombre" type="text" class="celda7" id="nombre" maxlength="256">
-          </span></td>
-          <td><a href="#" class="linkverdana11Verde2B">BUSCAR</a></td>
-        </tr>
-      </table></td>
-    </tr>
-</table>
+    </table>
+</form>                
 {% endblock search%}
 
 {% block body %}
@@ -191,17 +198,7 @@
     </tr>
     <tr>
       <td>
-        <table width="140" border="0" align="right" cellpadding="0" cellspacing="0">
-            <tr>
-              <td width="21"><img src="{{ asset('bundles/app/images/admin/ico-flecha2.gif') }}" width="21" height="9"></td>
-              <td><div align="center"><a href="#" class="linkverdana11Verde">1</a></div></td>
-              <td><div align="center"><a href="#" class="linkverdana11Verde">2</a></div></td>
-              <td><div align="center" class="textobaseVerdeB">3</div></td>
-              <td><div align="center"><a href="#" class="linkverdana11Verde">4</a></div></td>
-              <td><div align="center"><a href="#" class="linkverdana11Verde">5</a></div></td>
-              <td width="21"><img src="{{ asset('bundles/app/images/admin/ico-flecha3.gif') }}" width="21" height="9"></td>
-            </tr>
-        </table>
+          {{ knp_pagination_render(entities) }}
       </td>
     </tr>
     <tr>

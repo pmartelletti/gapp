@@ -14,11 +14,28 @@ class UserRepository extends EntityRepository {
     /*
      * 
      */
-    public function findByRoleAttendant() {
+    public function findByRoleAttendant($s_name, $s_zona, $s_type, $s_province) {
 
-        return $this->createQueryBuilder('u')
-                        ->where('u.roles LIKE :roles')
-                        ->setParameter('roles', '%"ROLE_CUSTOMER"%')
-                        ->getQuery()->getResult();
+        $q = $this->createQueryBuilder('u')
+                ->where('u.roles LIKE :roles')
+                ->setParameter('roles', '%"ROLE_CUSTOMER"%');
+                
+        if($s_name != ''){
+            $q->andWhere("u.firstname LIKE '%".$s_name."%' OR u.lastname LIKE '%".$s_name."%' ");
+        }
+        
+        if($s_zona != ''){
+            $q->andWhere("u.zona = '".$s_zona."'");
+        }
+        
+        if($s_type != ''){
+            $q->andWhere("u.types = '".$s_type."'");
+        }
+        
+        if($s_province != ''){
+            $q->andWhere("u.province = '".$s_province."'");
+        }
+        
+        return $q->getQuery()->getResult(); 
     }
 }

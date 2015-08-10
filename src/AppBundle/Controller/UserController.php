@@ -26,15 +26,21 @@ class UserController extends Controller
     { 
         $em = $this->getDoctrine()->getManager();
         $errorMessage = "";
-        $entities = $em->getRepository('AppBundle:User')->findByRoleAttendant();
         
-        $province = Commons::getArrayProvince();
-        $zona     = Commons::getArrayZona();
-        $type     = Commons::getArrayType();
+        $province = Commons::getArrayProvince('Filtrar por Provincia');
+        $zona     = Commons::getArrayZona('Filtrar por Zona');
+        $type     = Commons::getArrayType('Filtrar por Tipo');
 
+        $s_name = $request->get('s_name','');
+        $s_zona = $request->get('s_zona','');
+        $s_type = $request->get('s_type','');
+        $s_province = $request->get('s_province','');
+        
+        $entities = $em->getRepository('AppBundle:User')->findByRoleAttendant($s_name, $s_zona, $s_type, $s_province);
+        
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-                $entities, $request->get('page', 1) /* page number */, 50
+                $entities, $request->get('page', 1) /* page number */, 1
         );
         if (!$entities) {
             $errorMessage = 'No existen registros guardados';
@@ -44,7 +50,11 @@ class UserController extends Controller
             'message'  => $errorMessage,
             'province' => $province,
             'zona' => $zona,
-            'type' => $type]);
+            'type' => $type,
+            's_name'=>$s_name,
+            's_zona'=>$s_zona,
+            's_type'=>$s_type,
+            's_province'=>$s_province]);
     }
     
     /**

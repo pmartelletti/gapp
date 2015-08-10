@@ -10,9 +10,9 @@ class Commons
     /*
      * 
      */
-    public static function getArrayProvince()
+    public static function getArrayProvince($value_null = 'Seleccionar Provincia')
     {
-        $province = [''=>'Seleccionar Provincia',
+        $province = [''=>$value_null,
             'buenos-aires'=>'Buenos Aires',
             'catamarca'=>'Catamarca',
             'chaco'=>'Chaco',
@@ -43,9 +43,9 @@ class Commons
     /*
      * 
      */
-    public static function getArrayZona()
+    public static function getArrayZona($value_null = 'Seleccionar Zona')
     {
-        $zona = [''=>'Seleccionar Zona',
+        $zona = [''=>$value_null,
                  'x'=>'x',];
         
         return $zona;
@@ -54,9 +54,13 @@ class Commons
     /*
      * 
      */
-    public static function getArrayType()
+    public static function getArrayType($value_null = '')
     {
-        $type = ['cliente'=>'Cliente',
+        $type = [];
+        
+        if($value_null!=''){$type[''] = $value_null;}
+        
+        $type += ['cliente'=>'Cliente',
                  'distribuidor'=>'Distribuidor',
                  'redistribuidor'=>'Redistribuidor',
                  'otro'=>'Otro'];

@@ -1,0 +1,42 @@
+{#
+/**
+ * @file
+ * Twitter Bootstrap v3 Sliding pagination control implementation.
+ *
+ * View that can be used with the pagination module
+ * from the Twitter Bootstrap CSS Toolkit
+ * http://getbootstrap.com/components/#pagination
+ *
+ * @author Pablo Díez <pablodip@gmail.com>
+ * @author Jan Sorgalla <jsorgalla@gmail.com>
+ * @author Artem Ponomarenko <imenem@inbox.ru>
+ * @author Artem Zabelin <artjomzabelin@gmail.com>
+ */
+#}
+{% if pageCount > 1 %}
+<table width="140" border="0" align="right" cellpadding="0" cellspacing="0">
+    <tr>
+      {% if previous is defined %}  
+      <td width="21">
+          <a href="{{ path(route, query|merge({(pageParameterName): previous})) }}">
+            <img src="{{ asset('bundles/app/images/admin/ico-flecha2.gif') }}" width="21" height="9">
+          </a>  
+      </td>
+      {% endif %}
+      {% for page in pagesInRange %}
+          {% if page != current %}
+            <td><div align="center"><a href="{{ path(route, query|merge({(pageParameterName): page})) }}" class="linkverdana11Verde">{{ page }}</a></div></td>
+          {% else %}
+            <td><div align="center" class="textobaseVerdeB">{{ page }}</div></td>  
+          {% endif %}
+      {% endfor %}    
+      {% if next is defined %}
+      <td width="21">
+          <a href="{{ path(route, query|merge({(pageParameterName): next})) }}">
+            <img src="{{ asset('bundles/app/images/admin/ico-flecha3.gif') }}" width="21" height="9">
+          </a>  
+      </td>
+      {% endif %}
+    </tr>
+</table>
+{% endif %}
