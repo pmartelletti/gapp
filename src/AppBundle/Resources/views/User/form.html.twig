@@ -36,3 +36,126 @@
     </tr>
 </table>    
 {% endblock header%} 
+
+
+{% block body %}
+{{ form_errors(form) }}    
+<form action="" method="POST">
+    <table width="530" border="0" align="center" cellpadding="7" cellspacing="0">
+        <tr>
+          <td height="10" valign="top" class="textoBaseB">
+              <div align="right">{{ form_label(form.firstname) }}:</div>
+          </td>
+          <td valign="top" class="textoBase">
+              {{ form_widget(form.firstname) }}
+          </td>
+        </tr>
+        <tr>
+          <td height="10" valign="top" class="textoBaseB">
+              <div align="right">{{ form_label(form.lastname) }}:</div>
+          </td>
+          <td valign="top" class="textoBase">
+              {{ form_widget(form.lastname) }}
+          </td>
+        </tr>
+        <tr>
+          <td height="10" valign="top" class="textoBaseB">
+              <div align="right">{{ form_label(form.company) }}:</div>
+          </td>
+          <td valign="top" class="textoBase">
+              {{ form_widget(form.company) }}
+          </td>
+        </tr>
+        <tr>
+          <td height="10" valign="top" class="textoBaseB">
+              <div align="right">{{ form_label(form.address) }}:</div>
+          </td>
+          <td valign="top" class="textoBase">
+              {{ form_widget(form.address) }}
+          </td>
+        </tr>
+        <tr>
+          <td height="10" valign="top" class="textoBaseB">
+              <div align="right">{{ form_label(form.locality) }}:</div>
+          </td>
+          <td valign="top" class="textoBase">
+              {{ form_widget(form.locality) }}
+          </td>
+        </tr>
+        <tr>
+          <td height="10" valign="top" class="textoBaseB">
+              <div align="right">{{ form_label(form.province) }}:</div>
+          </td>
+          <td valign="top" class="textoBase">
+              {{ form_widget(form.province) }}
+          </td>
+        </tr>
+        <tr>
+          <td height="10" valign="top" class="textoBaseB">
+              <div align="right">{{ form_label(form.zona) }}:</div>
+          </td>
+          <td valign="top" class="textoBase">
+              {{ form_widget(form.zona) }}
+          </td>
+        </tr>
+        <tr>
+          <td height="10" valign="top" class="textoBaseB">
+              <div align="right">{{ form_label(form.phone) }}:</div>
+          </td>
+          <td valign="top" class="textoBase">
+              {{ form_widget(form.phone) }}
+          </td>
+        </tr>
+        <tr>
+          <td height="10" valign="top" class="textoBaseB">
+              <div align="right">{{ form_label(form.email) }}:</div>
+          </td>
+          <td valign="top" class="textoBase">
+              {{ form_widget(form.email) }} <div class="textobaseRojoB">{{ form_errors(form.email) }}</div>
+          </td>
+        </tr>
+        <tr>
+          <td height="10" valign="top" class="textoBaseB">
+              <div align="right">{{ form_label(form.web) }}:</div>
+          </td>
+          <td valign="top" class="textoBase">
+              {{ form_widget(form.web) }}
+          </td>
+        </tr>
+        <tr>
+          <td height="10" valign="top" class="textoBaseB">
+              <div align="right">{{ form_label(form.types) }}:</div>
+          </td>
+          <td valign="top" class="textoBase">
+              {{ form_widget(form.types) }}
+          </td>
+        </tr>
+        <tr>
+          <td height="10" valign="top" class="textoBaseB">
+              <div align="right">{{ form_label(form.activity) }}:</div>
+          </td>
+          <td valign="top" class="textoBase">
+              {{ form_widget(form.activity) }}
+          </td>
+        </tr>
+        {% if(type == 'new') %}
+        <tr>
+          <td height="10" valign="top" class="textoBaseB">
+              <div align="right">{{ form_label(form.plainPassword) }}:</div>
+          </td>
+          <td valign="top" class="textoBase">
+              {{ form_widget(form.plainPassword) }}
+          </td>
+        </tr>
+        {% endif %}
+        <tr>
+          <td colspan="2">
+              <div align="right">
+                <input name="submit" type="submit" class="celda4" style="color: #FFFFFF; font-family: arial; border: 1px solid #00693E; background-color: #00693E" value="{{label}}">                
+                {{ form_widget(form._token) }}
+              </div>
+          </td>
+        </tr>
+    </table>
+</form>          
+{% endblock body%}

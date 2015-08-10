@@ -84,9 +84,17 @@
 {% endblock search%}
 
 {% block body %}
+<div class="textobaseVerdeB">
+    {% for flashMessage in app.session.flashbag.get('update_info') %}{{ flashMessage }}{% endfor %}
+</div>
+<div class="textobaseRojoB">
+    {% for flashMessage in app.session.flashbag.get('delete_info') %}{{ flashMessage }}{% endfor %}
+</div>
+<br/>
 <table width="100%" height="100%" border="0" cellpadding="0" cellspacing="0">
-    <tr>
-      <td valign="top">
+    {% if entities.getTotalItemCount %}
+    <tr>        
+      <td valign="top">  
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
               <td colspan="11" bgcolor="#00693E"><img src="{{ asset('bundles/app/images/admin/1pix.gif') }}" width="1" height="1"></td>
@@ -112,30 +120,101 @@
     </tr>
     <tr>
         <td height="100%" valign="top">
-            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                    <tr>
+                      <td>
+                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                            {% for entity in entities %}
+                            <tr>
+                              <td width="45" height="35"><div align="center">
+                                <input type="checkbox" name="checkbox2" value="checkbox">
+                              </div></td>
+                              <td width="150" class="textoBase">{{ entity.lastname | capitalize }} {{ entity.firstname | capitalize }} <br></td>
+                              <td width="6" class="textoBase">&nbsp;</td>
+                              <td width="89"><span class="textoBase">{{ zona[entity.zona] }}</span></td>
+                              <td width="120" class="textoBase">{{ province[entity.province] }}</td>
+                              <td width="15">&nbsp;</td>
+                              <td width="225"><a href="mailto:{{ entity.email }}" class="linkverdana11Gris2">{{ entity.email }}</a></td>
+                              <td width="17">&nbsp;</td>
+                              <td width="96" class="textoBase">{{ type[entity.types] }}</td>
+                              <td width="65">
+                                  <div align="center">
+                                      <a href="{{ path('user_edit', {'id': entity.id})}}">
+                                        <img src="{{ asset('bundles/app/images/admin/ico-editar.gif') }}" width="13" height="13">
+                                      </a>  
+                                  </div>
+                              </td>
+                              <td width="62">
+                                  <div align="center">
+                                      <a href="{{ path('user_delete', {'id': entity.id})}}">
+                                        <img src="{{ asset('bundles/app/images/admin/ico-eliminar.gif') }}" width="14" height="14">
+                                      </a>  
+                                  </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td height="1" colspan="11" bgcolor="#B3B3B3"><img src="{{ asset('bundles/app/images/admin/1pix.gif') }}" width="1" height="1"></td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                    <tr>
+                      <td>&nbsp;</td>
+                    </tr>
+                </table>
+        </td>
+    </tr>
+    <tr>
+      <td>
+        <table width="140" border="0" align="right" cellpadding="0" cellspacing="0">
+            <tr>
+              <td width="21"><img src="{{ asset('bundles/app/images/admin/ico-flecha2.gif') }}" width="21" height="9"></td>
+              <td><div align="center"><a href="#" class="linkverdana11Verde">1</a></div></td>
+              <td><div align="center"><a href="#" class="linkverdana11Verde">2</a></div></td>
+              <td><div align="center" class="textobaseVerdeB">3</div></td>
+              <td><div align="center"><a href="#" class="linkverdana11Verde">4</a></div></td>
+              <td><div align="center"><a href="#" class="linkverdana11Verde">5</a></div></td>
+              <td width="21"><img src="{{ asset('bundles/app/images/admin/ico-flecha3.gif') }}" width="21" height="9"></td>
+            </tr>
+        </table>
+      </td>
+    </tr>
+    <tr>
+      <td>&nbsp;</td>
+    </tr>
+    {% else %}
+    <tr>
+        <td>
+            <table> 
                 <tr>
-                  <td>
-                    <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                        <tr>
-                          <td width="45" height="35"><div align="center">
-                            <input type="checkbox" name="checkbox2" value="checkbox">
-                          </div></td>
-                          <td width="150" class="textoBase">Bourlot Julio <br></td>
-                          <td width="6" class="textoBase">&nbsp;</td>
-                          <td width="89"><span class="textoBase"> NOA</span></td>
-                          <td width="120" class="textoBase">Entre R&iacute;os</td>
-                          <td width="15">&nbsp;</td>
-                          <td width="225"><a href="mailto:forrajeranorte@yahoo.com.ar" class="linkverdana11Gris2">forrajeranorte@yahoo.com.ar</a></td>
-                          <td width="17">&nbsp;</td>
-                          <td width="96" class="textoBase">Distribuidor</td>
-                          <td width="65"><div align="center"><img src="{{ asset('bundles/app/images/admin/ico-editar.gif') }}" width="13" height="13"></div></td>
-                          <td width="62"><div align="center"><img src="{{ asset('bundles/app/images/admin/ico-eliminar.gif') }}" width="14" height="14"></div></td>
-                        </tr>
-                        <tr>
-                          <td height="1" colspan="11" bgcolor="#B3B3B3"><img src="{{ asset('bundles/app/images/admin/1pix.gif') }}" width="1" height="1"></td>
-                        </tr>
-                    </table>
-                  </td>
+                    <td class="textoBase">
+                        {{ message }}
+                    </td>
                 </tr>
                 <tr>
                   <td>&nbsp;</td>
@@ -165,26 +244,11 @@
                   <td>&nbsp;</td>
                 </tr>
             </table>
-
         </td>
-    </tr>
+    </tr> 
     <tr>
       <td>&nbsp;</td>
     </tr>
-    <tr>
-      <td>
-        <table width="140" border="0" align="right" cellpadding="0" cellspacing="0">
-            <tr>
-              <td width="21"><img src="{{ asset('bundles/app/images/admin/ico-flecha2.gif') }}" width="21" height="9"></td>
-              <td><div align="center"><a href="#" class="linkverdana11Verde">1</a></div></td>
-              <td><div align="center"><a href="#" class="linkverdana11Verde">2</a></div></td>
-              <td><div align="center" class="textobaseVerdeB">3</div></td>
-              <td><div align="center"><a href="#" class="linkverdana11Verde">4</a></div></td>
-              <td><div align="center"><a href="#" class="linkverdana11Verde">5</a></div></td>
-              <td width="21"><img src="{{ asset('bundles/app/images/admin/ico-flecha3.gif') }}" width="21" height="9"></td>
-            </tr>
-        </table>
-      </td>
-    </tr>
+    {% endif %}    
 </table>
 {% endblock body%}

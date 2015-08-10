@@ -99,6 +99,13 @@ h1 {
 	line-height: 170%;
 	font-weight: bold;
 }
+.textobaseRojoB {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 11px;
+	color: #AA3333;
+	line-height: 170%;
+	font-weight: bold;
+}
 .textoArial18Verde {
 	font-family: Arial, Verdana, Helvetica, sans-serif;
 	font-size: 18px;
