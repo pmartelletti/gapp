@@ -40,7 +40,7 @@ class UserController extends Controller
         
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-                $entities, $request->get('page', 1) /* page number */, 1
+                $entities, $request->get('page', 1) /* page number */, 10
         );
         if (!$entities) {
             $errorMessage = 'No existen registros guardados';

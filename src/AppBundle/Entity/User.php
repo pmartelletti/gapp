@@ -123,11 +123,18 @@ class User extends BaseUser
      */
     private $updatedAt;
     
+    /**
+     * @ORM\ManyToMany(targetEntity="Document", inversedBy="users")
+     * @ORM\JoinTable(name="users_document")
+     **/
+    private $document;
+
     
     public function __construct()
     {
         parent::__construct();
         // your own logic
+        $this->document = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

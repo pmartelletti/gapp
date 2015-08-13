@@ -1,0 +1,71 @@
+{% extends "AppBundle:Admin:layout.html.twig" %}
+
+{% block header %}
+<table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#00693E">
+    <tr>
+      <td width="11"><img src="{{ asset('bundles/app/images/admin/fondo-tit1.gif') }}" width="11" height="57"></td>
+      <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
+        <tr>
+          <td width="15">&nbsp;</td>
+          <td class="titulo3">Crear o editar documento</td>
+          <td width="190"><table width="190" height="27" border="0" cellpadding="0" cellspacing="0" bgcolor="#01482B">
+            <tr>
+              <td width="7"><img src="{{ asset('bundles/app/images/admin/fondo-menu1.gif') }}" width="7" height="27"></td>
+              <td width="34"><div align="center"><img src="{{ asset('bundles/app/images/admin/ico-documentos.gif') }}" width="14" height="14"></div></td>
+              <td><div align="center" class="linkverdana11BcoB">
+                <div align="left"><a href="{{ path('user_list') }}" class="linkverdana11BcoB">LISTA DE DOCUMENTOS  </a></div>
+              </div></td>
+              <td width="7"><img src="{{ asset('bundles/app/images/admin/fondo-menu2.gif') }}" width="7" height="27"></td>
+            </tr>
+          </table></td>
+          <td width="20">&nbsp;</td>
+          <td width="88"><table width="88" height="27" border="0" cellpadding="0" cellspacing="0" bgcolor="#01482B">
+            <tr>
+              <td width="7"><img src="{{ asset('bundles/app/images/admin/fondo-menu1.gif') }}" width="7" height="27"></td>
+              <td width="25"><div align="center"><img src="{{ asset('bundles/app/images/admin/ico-flecha.gif') }}" width="5" height="10"></div></td>
+              <td><div align="center" class="linkverdana11BcoB">
+                  <div align="left"><a href="{{ path('admin_menu') }}" class="linkverdana11BcoB">MENU</a></div>
+              </div></td>
+              <td width="7"><img src="{{ asset('bundles/app/images/admin/fondo-menu2.gif') }}" width="7" height="27"></td>
+            </tr>
+          </table></td>
+          <td width="10">&nbsp;</td>
+        </tr>
+      </table></td>
+      <td width="11"><img src="{{ asset('bundles/app/images/admin/fondo-tit2.gif') }}" width="11" height="57"></td>
+    </tr>
+</table>    
+{% endblock header%} 
+
+
+{% block body %}
+{{ form_errors(form) }}    
+<form action="" method="POST" enctype="multipart/form-data">
+    <table width="530" border="0" align="center" cellpadding="7" cellspacing="0">
+        <tr>
+          <td height="10" valign="top" class="textoBaseB">
+              <div align="right">{{ form_label(form.name) }}:</div>
+          </td>
+          <td valign="top" class="textoBase">
+              {{ form_widget(form.name) }}
+          </td>
+        </tr>
+        <tr>
+          <td height="10" valign="top" class="textoBaseB">
+              <div align="right">{{ form_label(form.file) }}:</div>
+          </td>
+          <td valign="top" class="textoBase">
+              {{ form_widget(form.file) }}
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+              <div align="right">
+                <input name="submit" type="submit" class="celda4" style="color: #FFFFFF; font-family: arial; border: 1px solid #00693E; background-color: #00693E" value="{{label}}">                
+                {{ form_widget(form._token) }}
+              </div>
+          </td>
+        </tr>
+    </table>
+</form>          
+{% endblock body%}
