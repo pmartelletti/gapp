@@ -59,6 +59,43 @@
           </td>
         </tr>
         <tr>
+          <td height="10" valign="top" class="textoBaseB">
+              <div align="right">{{ form_label(form.enable) }}:</div>
+          </td>
+          <td valign="top" class="textoBase">
+              {{ form_widget(form.enable) }}
+          </td>
+        </tr>
+        <tr>
+            <td height="10" valign="top" class="textoBaseB">
+                <div align="right">Usuarios:</div>
+            </td>
+            <td>
+                <table>
+                    <tr>
+                        <td style="width: 50%">
+                            <select style="width: 170px;" name="from" id="multiselect" class="form-control" size="8" multiple="multiple">
+                                    <option value="1" data-position="1">Item 1</option>
+                                    <option value="2" data-position="2">Item 5</option>
+                                    <option value="2" data-position="3">Item 2</option>
+                                    <option value="2" data-position="4">Item 4</option>
+                                    <option value="3" data-position="5">Item 3</option>
+                            </select>
+                        </td>
+                        <td style="width: 15%">
+                            <button type="button" id="multiselect_rightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button><br/>
+                            <button type="button" id="multiselect_rightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button><br/>
+                            <button type="button" id="multiselect_leftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button><br/>
+                            <button type="button" id="multiselect_leftAll" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button><br/>    
+                        </td>
+                        <td style="width: 40%">
+                            <select style="width: 170px;" name="to" id="multiselect_to" class="form-control" size="8" multiple="multiple"></select>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
           <td colspan="2">
               <div align="right">
                 <input name="submit" type="submit" class="celda4" style="color: #FFFFFF; font-family: arial; border: 1px solid #00693E; background-color: #00693E" value="{{label}}">                
@@ -69,3 +106,11 @@
     </table>
 </form>          
 {% endblock body%}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript">
+    jQuery(document).ready(function($) {
+            $('#multiselect').multiselect();
+    });
+    </script>
+{% endblock %}    

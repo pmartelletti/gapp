@@ -31,6 +31,18 @@ class Document
     protected $path;
     
     /**
+     *
+     * @ORM\Column(name="enable", type="boolean",options={"default"= 0})
+     */
+    protected $enable;
+    
+    /**
+     *
+     * @ORM\Column(name="size", type="integer",options={"default"= 0})
+     */
+    protected $size;
+    
+    /**
      * @Assert\File(maxSize="6000000")
      */
     private $file;
@@ -40,6 +52,22 @@ class Document
      * @var string 
      */
     private $temp;
+    
+    
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_at", type="datetime", length=255, nullable=true)
+     */
+    private $createdAt;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="updated_at", type="datetime", length=255, nullable=true)
+     */
+    private $updatedAt;
+    
     
     /**
      * @ORM\ManyToMany(targetEntity="User", mappedBy="document")
@@ -81,6 +109,52 @@ class Document
     public function getName()
     {
         return $this->name;
+    }
+    
+    /**
+     * Set enable
+     *
+     * @param string $enable
+     * @return Document
+     */
+    public function setEnable($enable)
+    {
+        $this->enable = $enable;
+
+        return $this;
+    }
+
+    /**
+     * Get enable
+     *
+     * @return string 
+     */
+    public function getEnable()
+    {
+        return $this->enable;
+    }
+    
+    /**
+     * Set size
+     *
+     * @param string $size
+     * @return Document
+     */
+    public function setSize($size)
+    {
+        $this->size = $size;
+
+        return $this;
+    }
+
+    /**
+     * Get size
+     *
+     * @return string 
+     */
+    public function getSize()
+    {
+        return $this->size;
     }
 
     /**
@@ -158,6 +232,9 @@ class Document
     public function setFile(UploadedFile $file = null)
     {
         $this->file = $file;
+        
+        $this->setSize($this->file->getClientSize());
+        
         // check if we have an old image path
         if (isset($this->path)) {
             // store the old name to delete after the update
@@ -225,5 +302,51 @@ class Document
         if ($file) {
             unlink($file);
         }
+    }
+    
+    /**
+     * Set createdAt
+     *
+     * @param \DateTime $createdAt
+     * @return User
+     */
+    public function setCreatedAt($createdAt)
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * Get createdAt
+     *
+     * @return \DateTime 
+     */
+    public function getCreatedAt()
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * Set updatedAt
+     *
+     * @param \DateTime $updatedAt
+     * @return User
+     */
+    public function setUpdatedAt($updatedAt)
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get updatedAt
+     *
+     * @return \DateTime 
+     */
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
     }
 }

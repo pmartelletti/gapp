@@ -93,6 +93,11 @@
         </td>
     </tr>
 </table>
+{% block javascripts %}            
+<script type="text/javascript" src="{{asset('bundles/app/js/jquery-2.1.0.min.js') }}"></script>
+<script type="text/javascript" src="{{asset('bundles/app/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{asset('bundles/app/js/multiselect.min.js') }}"></script> 
+{% endblock %}
 </body>
 
 </html>

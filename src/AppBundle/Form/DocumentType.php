@@ -32,7 +32,18 @@ class DocumentType extends AbstractType {
                             "class" => "celda3",
                         )
                     )
-                );
+                )->add(
+                    'enable', 'checkbox', array(
+                        'label' => 'Habilitar',
+                        "mapped" => true,
+                        'required' => false,
+                        'attr' => array(
+                            "class" => "celda3",
+                            'value'=> 1,
+                        )
+                    )
+                )
+            ;
     }    
     
     public function setDefaultOptions(OptionsResolverInterface $resolver) {
