@@ -8,10 +8,10 @@
         <tr>
           <td width="15">&nbsp;</td>
           <td class="titulo3">Crear o editar documento</td>
-          <td width="190"><table width="190" height="27" border="0" cellpadding="0" cellspacing="0" bgcolor="#01482B">
+          <td width="212"><table width="212" height="27" border="0" cellpadding="0" cellspacing="0" bgcolor="#01482B">
             <tr>
               <td width="7"><img src="{{ asset('bundles/app/images/admin/fondo-menu1.gif') }}" width="7" height="27"></td>
-              <td width="34"><div align="center"><img src="{{ asset('bundles/app/images/admin/ico-documentos.gif') }}" width="14" height="14"></div></td>
+              <td width="34"><div align="center"><img src="{{ asset('bundles/app/images/admin/ico-documentos.gif') }}" width="14" height="12"></div></td>
               <td><div align="center" class="linkverdana11BcoB">
                 <div align="left"><a href="{{ path('user_list') }}" class="linkverdana11BcoB">LISTA DE DOCUMENTOS  </a></div>
               </div></td>
@@ -75,11 +75,9 @@
                     <tr>
                         <td style="width: 50%">
                             <select style="width: 170px;" name="from" id="multiselect" class="form-control" size="8" multiple="multiple">
-                                    <option value="1" data-position="1">Item 1</option>
-                                    <option value="2" data-position="2">Item 5</option>
-                                    <option value="2" data-position="3">Item 2</option>
-                                    <option value="2" data-position="4">Item 4</option>
-                                    <option value="3" data-position="5">Item 3</option>
+                                {% for item in user %}
+                                    <option value="{{ item.getId() }}" >{{ item.getNameCompleted() | capitalize }}</option>
+                                {% endfor %}    
                             </select>
                         </td>
                         <td style="width: 15%">
@@ -89,7 +87,11 @@
                             <button type="button" id="multiselect_leftAll" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button><br/>    
                         </td>
                         <td style="width: 40%">
-                            <select style="width: 170px;" name="to" id="multiselect_to" class="form-control" size="8" multiple="multiple"></select>
+                            <select style="width: 170px;" name="to[]" id="multiselect_to" class="form-control" size="8" multiple="multiple">
+                                {% for k,v in user_array_document %}
+                                    <option value="{{ k }}">{{ v | capitalize }}</option>
+                                {% endfor %} 
+                            </select>
                         </td>
                     </tr>
                 </table>

@@ -14,7 +14,7 @@ class UserRepository extends EntityRepository {
     /*
      * 
      */
-    public function findByRoleAttendant($s_name, $s_zona, $s_type, $s_province) {
+    public function findByRoleAttendant($s_name = '', $s_zona= '', $s_type= '', $s_province= '') {
 
         $q = $this->createQueryBuilder('u')
                 ->where('u.roles LIKE :roles')
@@ -37,5 +37,88 @@ class UserRepository extends EntityRepository {
         }
         
         return $q->getQuery()->getResult(); 
+    }
+    
+    /**
+     * 
+     * @param array $user_in_document
+     * @return object
+     */
+    public function findUserNotDocument($user_in_document){
+        
+        $q = $this->createQueryBuilder('u')
+                ->where('u.roles LIKE :roles')
+                ->setParameter('roles', '%"ROLE_CUSTOMER"%');
+        
+        if($user_in_document){
+            $string_id = '';
+            foreach ($user_in_document AS $v){
+                $string_id .= $v->getId().',';
+            }
+            $string_id = substr($string_id, 0, -1);
+            if($string_id != ''){
+                $q->andWhere($q->expr()->notIn('u.id', $string_id));
+            }
+        }
+        
+        return $q->getQuery()->getResult(); 
+    }
+    
+    /**
+     * 
+     * @param array $users
+     * @return object
+     */
+    public function getUsersInId($users){
+        
+        $q = $this->createQueryBuilder('u')
+                ->where('u.roles LIKE :roles')
+                ->setParameter('roles', '%"ROLE_CUSTOMER"%');
+        
+        if($users){
+            $string_id = '';
+            foreach ($users AS $v){
+                $string_id .= $v.',';
+            }
+            $string_id = substr($string_id, 0, -1);
+            if($string_id != ''){
+                $q->andWhere($q->expr()->in('u.id', $string_id));
+            }
+        }
+        
+        return $q->getQuery()->getResult(); 
+    }
+    
+    /**
+     * 
+     * @param object $users
+     * @return array
+     */
+    public function getArrayData($users){
+        $array = [];
+        
+        foreach ($users AS $v){
+            $array[$v->getId()] = $v->getNameCompleted();
+        }
+        
+        return $array;
+    }
+    
+    /**
+     * 
+     * @param int $id_documnet
+     * @param int $id_user
+     * @return object
+     */
+    public function getDataByDocumenteAndUser($id_documnet, $id_user){
+       
+        $q = $this->createQueryBuilder('u')
+             ->leftJoin('u.document', 'd')
+             ->where('u.id = :id_user')
+             ->andWhere('d.id = :id_document')
+             ->setParameter('id_user', $id_user)
+             ->setParameter('id_document', $id_documnet) ;
+                
+        return $q->getQuery()->getResult();         
     }
 }

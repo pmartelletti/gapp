@@ -445,4 +445,46 @@ class User extends BaseUser
     {
         return $this->updatedAt;
     }
+
+    /**
+     * Add document
+     *
+     * @param \AppBundle\Entity\Document $document
+     * @return User
+     */
+    public function addDocument(\AppBundle\Entity\Document $document)
+    {
+        $this->document[] = $document;
+
+        return $this;
+    }
+
+    /**
+     * Remove document
+     *
+     * @param \AppBundle\Entity\Document $document
+     */
+    public function removeDocument(\AppBundle\Entity\Document $document)
+    {
+        $this->document->removeElement($document);
+    }
+
+    /**
+     * Get document
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getDocument()
+    {
+        return $this->document;
+    }
+    
+    /**
+     * Get name completed
+     * @return string
+     */
+    public function getNameCompleted(){
+        
+        return $this->firstname.' '.$this->lastname;
+    }
 }

@@ -24,15 +24,6 @@ class DocumentType extends AbstractType {
                     )
                 )
                 ->add(
-                    'file', 'file', array(
-                        'label' => 'Documento',
-                        "mapped" => true,
-                        'required' => true,
-                        'attr' => array(
-                            "class" => "celda3",
-                        )
-                    )
-                )->add(
                     'enable', 'checkbox', array(
                         'label' => 'Habilitar',
                         "mapped" => true,

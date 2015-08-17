@@ -40,6 +40,22 @@ class DocumentController extends Controller
         return $this->forward('AppBundle:Document:form', ['form'=>$form, 'document'=>$document, 'label'=>$label, 'type'=>$type]);
     }
     
+    /**
+     * Edit Document entities.
+     *
+     * @Route("admin/document/{id}/edit", name="document_edit")
+     */
+    public function editUserAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $document = $em->getRepository('AppBundle:Document')->findOneById($id);
+        
+        $form  = $this->createEditForm($document, $id);
+        $type  = 'edit';
+        $label = '    EDITAR    ';
+        return $this->forward('AppBundle:Document:form', ['form'=>$form, 'document'=>$document, 'label'=>$label, 'type'=>$type]);
+        
+    }
     
     /**
      * form Document entities.
@@ -47,28 +63,56 @@ class DocumentController extends Controller
      */
     public function formAction(Request $request, $form, $document, $label, $type)
     {
+        $em = $this->getDoctrine()->getManager();
+        
+        $user_repository = $em->getRepository('AppBundle:User');
+        
+        $user = $user_repository->findUserNotDocument($document->getUsers());
+        
+        $user_array_document = $user_repository->getArrayData($document->getUsers());
+        
         if($request->isMethod('POST')){
             $form->handleRequest($request);
 
+            $to = $request->get('to', '');
+            
+            $user_to = $user_repository->getUsersInId($to);
+            
+            $user_array_document = $user_repository->getArrayData($user_to); 
+            
             if ($form->isValid()) {
-                
-                $em = $this->getDoctrine()->getManager();
-
+               
                 $em->persist($document);
                 $em->flush();
+                
+                foreach ($document->getUsers() AS $user_document){
+                    $document->removeUser($user_document);
+                    $user_document->removeDocument($document);
+                    $em->persist($user_document);
+                    $em->persist($document);
+                    $em->flush();
+                }
+                
+                foreach ($user_to AS $user){
+                    $document->addUser($user);
+                    $user->addDocument($document);
+                    $em->persist($user);
+                    $em->persist($document);
+                    $em->flush();     
+                }
                 
                 $this->get('session')->getFlashBag()->set('update_info', 'Se actualizo el registro');
                 return $this->redirect($this->generateUrl('doc_list'));
             }
         }
-        return $this->render('AppBundle:Document:form.html.twig', ['form'=>$form->createView(), 'label'=>$label, 'type'=>$type]);
+        return $this->render('AppBundle:Document:form.html.twig', ['form'=>$form->createView(), 'label'=>$label, 'type'=>$type, 'user'=>$user, 'user_array_document'=>$user_array_document ]);
     }
     
     
     
     
     /**
-     * Creates a form to create a Doccument entity.
+     * Creates a form to create a Document entity.
      *
      * @param Document $entity The entity
      *
@@ -80,6 +124,44 @@ class DocumentController extends Controller
             'method' => 'POST',
         ));
         
+        $form->add(
+                    'file', 'file', array(
+                        'label' => 'Documento',
+                        "mapped" => TRUE,
+                        'required' => true,
+                        'attr' => array(
+                            "class" => "celda3",
+                        )
+                    )
+                );
+        
+        return $form;
+    }
+    
+    /**
+     * Creates a form to edit a Document entity.
+     *
+     * @param Document $entity The entity
+     *
+     * @return \Symfony\Component\Form\Form The form
+     */
+    private function createEditForm(Document $entity, $id) {
+        $form = $this->createForm(new DocumentType('document_appbundle_document'), $entity, array(
+            'action' => $this->generateUrl('document_edit', ['id'=>$id]),
+            'method' => 'POST',
+        ));
+        
+        $form->add(
+                    'file', 'file', array(
+                        'label' => 'Documento',
+                        "mapped" => true,
+                        'required' => FALSE,
+                        'attr' => array(
+                            "class" => "celda3",
+                        )
+                    )
+                );
+
         return $form;
     }
 }

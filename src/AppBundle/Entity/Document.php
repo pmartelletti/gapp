@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\Common\Collections\ArrayCollection;
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\DocumentRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Document
@@ -71,6 +71,7 @@ class Document
     
     /**
      * @ORM\ManyToMany(targetEntity="User", mappedBy="document")
+     * @ORM\JoinTable(name="users_document")
      **/
     private $users;
 
@@ -348,5 +349,38 @@ class Document
     public function getUpdatedAt()
     {
         return $this->updatedAt;
+    }
+
+    /**
+     * Add users
+     *
+     * @param \AppBundle\Entity\User $users
+     * @return Document
+     */
+    public function addUser(\AppBundle\Entity\User $users)
+    {
+        $this->users[] = $users;
+
+        return $this;
+    }
+
+    /**
+     * Remove users
+     *
+     * @param \AppBundle\Entity\User $users
+     */
+    public function removeUser(\AppBundle\Entity\User $users)
+    {
+        $this->users->removeElement($users);
+    }
+
+    /**
+     * Get users
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUsers()
+    {
+        return $this->users;
     }
 }
