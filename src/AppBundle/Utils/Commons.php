@@ -67,4 +67,44 @@ class Commons
         
         return $type;
     }
+
+    /**
+     * 
+     * @param string $type_doc
+     * @return string
+     */
+    public static function getImgByTypeDoc($type_doc)
+    {
+        switch ($type_doc) {
+            case 'pdf':
+                    $imag = 'ico-pdf.gif';
+                break;
+            case 'doc':
+                    $imag = 'ico-word.gif';
+                break;
+            case 'docx':
+                    $imag = 'ico-word.gif';
+                break;
+            case 'jpeg':
+                    $imag = 'ico-ima.gif';
+                break;
+            case 'jpg':
+                    $imag = 'ico-ima.gif';
+                break;
+            case 'png':
+                    $imag = 'ico-ima.gif';
+                break;
+            case 'xls':
+                    $imag = 'ico-excel.gif';
+                break;
+            case 'xlsx':
+                    $imag = 'ico-excel.gif';
+                break;
+            default:
+                    $imag = 'ico-txt.gif';
+                break;
+        }
+        
+        return $imag; 
+    }        
 }

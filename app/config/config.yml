@@ -82,7 +82,7 @@ swiftmailer:
 
 fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
-    firewall_name: main
+    firewall_name: members_secured_area
     user_class: AppBundle\Entity\User
     
 # KNP Paginator

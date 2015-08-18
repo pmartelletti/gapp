@@ -23,7 +23,24 @@ class DocumentController extends Controller
      */
     public function indexAction(Request $request) 
     { 
+        $em = $this->getDoctrine()->getManager();
+        $errorMessage = "";
         
+        $s_name = $request->get('s_name','');
+        
+        $entities = $em->getRepository('AppBundle:Document')->getDocumentAllByFilter($s_name);
+        
+        $paginator = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+                $entities, $request->get('page', 1) /* page number */, 10
+        );
+        if (!$entities) {
+            $errorMessage = 'No existen registros guardados';
+        }
+        
+        return $this->render('AppBundle:Document:list.html.twig',['entities' => $pagination, 
+            'message'  => $errorMessage,
+            's_name'=>$s_name]);
     }
     
     /**
@@ -105,11 +122,67 @@ class DocumentController extends Controller
                 return $this->redirect($this->generateUrl('doc_list'));
             }
         }
-        return $this->render('AppBundle:Document:form.html.twig', ['form'=>$form->createView(), 'label'=>$label, 'type'=>$type, 'user'=>$user, 'user_array_document'=>$user_array_document ]);
+        return $this->render('AppBundle:Document:form.html.twig',
+                ['form'=>$form->createView(),
+                 'label'=>$label,
+                 'type'=>$type,
+                 'user'=>$user,
+                 'user_array_document'=>$user_array_document,
+                 'document'=>$document ]);
     }
     
     
+    /**
+     * 
+     * Delete Document entities.
+     *
+     * @Route("admin/document/{id}/delete", name="document_delete")
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $document = $em->getRepository('AppBundle:Document')->findOneById($id);
+        
+        if(!$document){return $this->redirect($this->generateUrl('document_list'));}
+        
+        foreach ($document->getUsers() AS $user_document){
+            $document->removeUser($user_document);
+            $user_document->removeDocument($document);
+            $em->persist($user_document);
+            $em->persist($document);
+            $em->flush();
+        }
+        
+        $em->remove($document);
+        $em->flush();
+        
+        $this->get('session')->getFlashBag()->set('delete_info', 'Se elimino el registro');
+        
+        return $this->redirect($this->generateUrl('document_list'));
+    }
     
+    /**
+     * 
+     * suspend Document entities.
+     *
+     * @Route("admin/document/{id}/suspend", name="document_suspend")
+     */
+    public function suspendAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $document = $em->getRepository('AppBundle:Document')->findOneById($id);
+        
+        if(!$document){return $this->redirect($this->generateUrl('document_list'));}
+        
+        $document->setEnable(0);
+        
+        $em->persist($document);
+        $em->flush();
+        
+        $this->get('session')->getFlashBag()->set('delete_info', 'Se actualizo el registro');
+        
+        return $this->redirect($this->generateUrl('document_list'));
+    }
     
     /**
      * Creates a form to create a Document entity.

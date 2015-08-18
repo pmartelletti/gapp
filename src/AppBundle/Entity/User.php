@@ -120,6 +120,7 @@ class User extends BaseUser
      * @var \DateTime
      *
      * @ORM\Column(name="updated_at", type="datetime", length=255, nullable=true)
+     * 
      */
     private $updatedAt;
     
@@ -486,5 +487,19 @@ class User extends BaseUser
     public function getNameCompleted(){
         
         return $this->firstname.' '.$this->lastname;
+    }
+    
+    /**
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updatedTimestamps()
+    {
+       $this->setUpdatedAt(new \DateTime('now'));
+
+       if ($this->getCreatedAt() == null) {
+           $this->setCreatedAt(new \DateTime('now'));
+       }
     }
 }

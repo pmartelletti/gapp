@@ -46,41 +46,48 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                                            <tr>
-                                                <td height="20" valign="top" class="textoBase">Usuario:</td>
-                                            </tr>
-                                            <tr>
-                                                <td height="20" valign="top">
-                                                    <span class="textoBase">
-                                                        <input name="nombre" type="text" class="celda" id="nombre" maxlength="256">
-                                                    </span>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td height="15" valign="top"><img src="{{ asset('bundles/app/images/admin/1pix.gif') }}" width="1" height="1"></td>
-                                            </tr>
-                                            <tr>
-                                                <td height="20" valign="top" class="textoBase">Contrase&ntilde;a:</td>
-                                            </tr>
-                                            <tr>
+                                        {% if error %}
+                                            <div>{{error.message }}</div>
+                                        {% endif %}
+                                        <form action="{{ path('login_check') }}" method="post">
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td height="20" valign="top" class="textoBase">Usuario:</td>
+                                                </tr>
+                                                <tr>
+                                                    <td height="20" valign="top">
+                                                        <span class="textoBase">
+                                                            <input name="_username" type="text" class="celda" id="username" maxlength="256">
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td height="15" valign="top"><img src="{{ asset('bundles/app/images/admin/1pix.gif') }}" width="1" height="1"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td height="20" valign="top" class="textoBase">Contrase&ntilde;a:</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <span class="textoBase">
+                                                            <input name="_password" type="password" class="celda" id="password" maxlength="256">
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td height="15"><img src="{{ asset('bundles/app/images/admin/1pix.gif') }}" width="1" height="1"></td>
+                                                </tr>
+                                                <tr>
                                                 <td>
-                                                    <span class="textoBase">
-                                                        <input name="contrasenia" type="password" class="celda" id="contrasenia" maxlength="256">
-                                                    </span>
+                                                    <div align="right">
+                                                        <input name="submit" type="submit" class="textoArial10Bco" style="color: #FFFFFF; font-family: arial; border: 1px solid #00693E; background-color: #00693E" value="    INGRESAR    ">
+                                                        <input type="hidden" name="_target_path" value="admin_menu" />
+                                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+                                                    </div>
                                                 </td>
-                                            </tr>
-                                            <tr>
-                                                <td height="15"><img src="{{ asset('bundles/app/images/admin/1pix.gif') }}" width="1" height="1"></td>
-                                            </tr>
-                                            <tr>
-                                            <td>
-                                                <div align="right">
-                                                    <input name="submit" type="submit" class="textoArial10Bco" style="color: #FFFFFF; font-family: arial; border: 1px solid #00693E; background-color: #00693E" value="    INGRESAR    ">
-                                                </div>
-                                            </td>
-                                            </tr>
-                                        </table>
+                                                </tr>
+                                            </table>
+                                        </form>
                                     </td>
                                 </tr>
                                 <tr>

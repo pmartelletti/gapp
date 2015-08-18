@@ -98,10 +98,25 @@
                                                     <tr>
                                                       <td width="15" background="{{ asset('bundles/app/images/admin/boton-fondo.gif') }}"><img src="{{ asset('bundles/app/images/admin/boton1.gif') }}" width="5" height="30"></td>
                                                       <td width="23"><img src="{{ asset('bundles/app/images/admin/ico-documentos.gif') }}" width="14" height="14"></td>
-                                                      <td background="{{ asset('bundles/app/images/admin/boton-fondo.gif') }}"><a href="usuario-edicion.htm" class="linkverdana11GrisB">LISTA DE DOCUMENTOS</a></td>
+                                                      <td background="{{ asset('bundles/app/images/admin/boton-fondo.gif') }}"><a href="{{ path('doc_list') }}" class="linkverdana11GrisB">LISTA DE DOCUMENTOS</a></td>
                                                       <td width="5" background="{{ asset('bundles/app/images/admin/boton-fondo.gif') }}"><img src="{{ asset('bundles/app/images/admin/boton2.gif') }}" width="5" height="30"></td>
                                                     </tr>
                                                 </table>     
+                                              </td>
+                                            </tr>
+                                            <tr>
+                                              <td height="23">&nbsp;</td>
+                                            </tr>
+                                            <tr>
+                                              <td>
+                                                <table width="100%" height="30" border="0" cellpadding="0" cellspacing="0" background="{{ asset('bundles/app/images/admin/boton-fondo.gif') }}">
+                                                    <tr>
+                                                      <td width="15" background="{{ asset('bundles/app/images/admin/boton-fondo.gif') }}"><img src="{{ asset('bundles/app/images/admin/boton1.gif') }}" width="5" height="30"></td>
+                                                      <td width="23"><img src="{{ asset('bundles/app/images/admin/ico-usuarios.gif') }}" width="14" height="14"></td>
+                                                      <td background="{{ asset('bundles/app/images/admin/boton-fondo.gif') }}"><a href="{{ path('logout') }}" class="linkverdana11GrisB">SALIR</a></td>
+                                                      <td width="5" background="{{ asset('bundles/app/images/admin/boton-fondo.gif') }}"><img src="{{ asset('bundles/app/images/admin/boton2.gif') }}" width="5" height="30"></td>
+                                                    </tr>
+                                                </table>  
                                               </td>
                                             </tr>
                                         </table>

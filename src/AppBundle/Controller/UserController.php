@@ -12,7 +12,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use FOS\UserBundle\Model\UserInterface;
 use AppBundle\Form\UserType;
 use AppBundle\Entity\User;
-use \AppBundle\Utils\Commons;
+use AppBundle\Utils\Commons;
 
 class UserController extends Controller
 {
@@ -34,9 +34,10 @@ class UserController extends Controller
         $s_name = $request->get('s_name','');
         $s_zona = $request->get('s_zona','');
         $s_type = $request->get('s_type','');
+        $document_id = $request->get('document_id','');
         $s_province = $request->get('s_province','');
         
-        $entities = $em->getRepository('AppBundle:User')->findByRoleAttendant($s_name, $s_zona, $s_type, $s_province);
+        $entities = $em->getRepository('AppBundle:User')->findByRoleAttendant($s_name, $s_zona, $s_type, $s_province, $document_id);
         
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -54,7 +55,8 @@ class UserController extends Controller
             's_name'=>$s_name,
             's_zona'=>$s_zona,
             's_type'=>$s_type,
-            's_province'=>$s_province]);
+            's_province'=>$s_province,
+            'document_id'=>$document_id]);
     }
     
     /**
@@ -103,7 +105,7 @@ class UserController extends Controller
                 $data = $request->get('user_appbundle_user');
                 
                 $em = $this->getDoctrine()->getManager();
-                $user->addRole("ROLE_CUSTOMER");
+                $user->addRole("ROLE_SUPER_ADMIN");
                 $user->setUsername($data['email']);
                 $user->setUsernameCanonical($data['email']);
 
@@ -129,6 +131,14 @@ class UserController extends Controller
         $user = $em->getRepository('AppBundle:User')->findOneById($id);
         
         if(!$user){return $this->redirect($this->generateUrl('user_list'));}
+        
+        foreach ($user->getDocument() AS $user_document){
+            $user->removeDocument($user_document);
+            $user_document->removeUser($user);
+            $em->persist($user_document);
+            $em->persist($user);
+            $em->flush();
+        }
         
         $em->remove($user);
         $em->flush();

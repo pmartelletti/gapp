@@ -28,4 +28,21 @@ class DocumentRepository extends EntityRepository {
                 
         return $q->getQuery()->getResult();         
     }
+    
+    /**
+     * 
+     * @param string $s_name
+     * @return object
+     */
+    public function getDocumentAllByFilter($s_name = '')
+    {
+        $q = $this->createQueryBuilder('d')
+             ->orderBy('d.createdAt');
+        
+        if($s_name != ''){
+            $q->andWhere("d.name LIKE '%".$s_name."%' ");
+        }
+        
+        return $q->getQuery()->getResult();   
+    }
 }

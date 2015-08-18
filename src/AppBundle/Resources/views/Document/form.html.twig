@@ -13,7 +13,7 @@
               <td width="7"><img src="{{ asset('bundles/app/images/admin/fondo-menu1.gif') }}" width="7" height="27"></td>
               <td width="34"><div align="center"><img src="{{ asset('bundles/app/images/admin/ico-documentos.gif') }}" width="14" height="12"></div></td>
               <td><div align="center" class="linkverdana11BcoB">
-                <div align="left"><a href="{{ path('user_list') }}" class="linkverdana11BcoB">LISTA DE DOCUMENTOS  </a></div>
+                <div align="left"><a href="{{ path('doc_list') }}" class="linkverdana11BcoB">LISTA DE DOCUMENTOS  </a></div>
               </div></td>
               <td width="7"><img src="{{ asset('bundles/app/images/admin/fondo-menu2.gif') }}" width="7" height="27"></td>
             </tr>
@@ -66,6 +66,24 @@
               {{ form_widget(form.enable) }}
           </td>
         </tr>
+        {% if(type == 'edit') %}
+        <tr>
+          <td height="10" valign="top" class="textoBaseB">
+              <div align="right">Peso:</div>
+          </td>
+          <td valign="top" class="textoBase">
+              {{ document.size }}
+          </td>
+        </tr>
+        <tr>
+          <td height="10" valign="top" class="textoBaseB">
+              <div align="right">Tipo:</div>
+          </td>
+          <td valign="top" class="textoBase">
+              <img src="{{ asset('bundles/app/images/front/'~document.getImgType()) }}" width="25" height="25">
+          </td>
+        </tr>
+        {% endif %}
         <tr>
             <td height="10" valign="top" class="textoBaseB">
                 <div align="right">Usuarios:</div>

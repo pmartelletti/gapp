@@ -6,6 +6,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Doctrine\Common\Collections\ArrayCollection;
+use AppBundle\Utils\Commons;
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Entity\Repository\DocumentRepository")
  * @ORM\HasLifecycleCallbacks
@@ -41,6 +42,16 @@ class Document
      * @ORM\Column(name="size", type="integer",options={"default"= 0})
      */
     protected $size;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $type;
+    
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    protected $img_type;
     
     /**
      * @Assert\File(maxSize="6000000")
@@ -236,6 +247,13 @@ class Document
         
         $this->setSize($this->file->getClientSize());
         
+        $this->setType($this->file->getClientOriginalExtension());
+        
+        $type_img = Commons::getImgByTypeDoc($this->getType());
+        
+        $this->setImgType($type_img);
+        
+        
         // check if we have an old image path
         if (isset($this->path)) {
             // store the old name to delete after the update
@@ -382,5 +400,65 @@ class Document
     public function getUsers()
     {
         return $this->users;
+    }
+    
+    /**
+     *
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updatedTimestamps()
+    {
+       $this->setUpdatedAt(new \DateTime('now'));
+
+       if ($this->getCreatedAt() == null) {
+           $this->setCreatedAt(new \DateTime('now'));
+       }
+    }
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return Document
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    /**
+     * Get type
+     *
+     * @return string 
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+
+    /**
+     * Set img_type
+     *
+     * @param string $imgType
+     * @return Document
+     */
+    public function setImgType($imgType)
+    {
+        $this->img_type = $imgType;
+
+        return $this;
+    }
+
+    /**
+     * Get img_type
+     *
+     * @return string 
+     */
+    public function getImgType()
+    {
+        return $this->img_type;
     }
 }

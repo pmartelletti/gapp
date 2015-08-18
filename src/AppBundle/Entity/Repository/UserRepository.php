@@ -14,7 +14,7 @@ class UserRepository extends EntityRepository {
     /*
      * 
      */
-    public function findByRoleAttendant($s_name = '', $s_zona= '', $s_type= '', $s_province= '') {
+    public function findByRoleAttendant($s_name = '', $s_zona= '', $s_type= '', $s_province= '', $document_id='') {
 
         $q = $this->createQueryBuilder('u')
                 ->where('u.roles LIKE :roles')
@@ -34,6 +34,13 @@ class UserRepository extends EntityRepository {
         
         if($s_province != ''){
             $q->andWhere("u.province = '".$s_province."'");
+        }
+        
+        if($document_id != '')
+        {
+            $q->leftJoin('u.document', 'd')
+              ->andWhere('d.id = :id_document')  
+              ->setParameter('id_document', $document_id) ;      
         }
         
         return $q->getQuery()->getResult(); 

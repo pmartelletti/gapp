@@ -7,13 +7,13 @@
       <td><table width="100%" border="0" cellspacing="0" cellpadding="0">
         <tr>
           <td width="15">&nbsp;</td>
-          <td class="titulo3">Lista de usuarios </td>
-          <td width="160"><table width="160" height="27" border="0" cellpadding="0" cellspacing="0" bgcolor="#01482B">
+          <td class="titulo3">Lista de documentos</td>
+          <td width="192"><table width="192" height="27" border="0" cellpadding="0" cellspacing="0" bgcolor="#01482B">
             <tr>
               <td width="7"><img src="{{ asset('bundles/app/images/admin/fondo-menu1.gif') }}" width="7" height="27"></td>
-              <td width="34"><div align="center"><img src="{{ asset('bundles/app/images/admin/ico-crear-usuarios.gif') }}" width="14" height="14"></div></td>
+              <td width="34"><div align="center"><img src="{{ asset('bundles/app/images/admin/ico-crear-documentos.gif') }}" width="14" height="14"></div></td>
               <td><div align="center" class="linkverdana11BcoB">
-                <div align="left"><a href="{{ path('user_new') }}" class="linkverdana11BcoB">CREAR USUARIO </a></div>
+                <div align="left"><a href="{{ path('document_new') }}" class="linkverdana11BcoB">CREAR DOCUMENTOS </a></div>
               </div></td>
               <td width="7"><img src="{{ asset('bundles/app/images/admin/fondo-menu2.gif') }}" width="7" height="27"></td>
             </tr>
@@ -39,30 +39,9 @@
 
 
 {% block search %}
-<form action="{{ path('user_list') }}" method="GET" >    
+<form action="{{ path('doc_list') }}" method="GET" >    
     <table width="100%" border="0" cellpadding="0" cellspacing="0">
         <tr>
-          <td width="166">
-                <select name="s_zona" size="1" class="celda7" style="font-family: Verdana; font-size: 11px" onChange="showtext(scrollbars=yes,width=600,height=500 )">
-                    {% for k, z in zona %}
-                        <option {%if(s_zona == k) %} selected="selected" {% endif %} value="{{ k }}">{{ z }}</option>
-                    {% endfor %}
-                </select>
-          </td>
-          <td width="168">
-                <select name="s_type" size="1" class="celda7" style="font-family: Verdana; font-size: 11px" onChange="showtext(scrollbars=yes,width=600,height=500 )">
-                    {% for k, t in type %}
-                        <option {%if(s_type == k) %} selected="selected" {% endif %} value="{{ k }}">{{ t }}</option>
-                    {% endfor %}
-                </select>
-          </td>
-          <td width="166">
-              <select name="s_province" size="1" class="celda7" style="font-family: Verdana; font-size: 11px" onChange="showtext(scrollbars=yes,width=600,height=500 )">
-                    {% for k, p in province %}
-                        <option {%if(s_province == k) %} selected="selected" {% endif %} value="{{ k }}">{{ p }}</option>
-                    {% endfor %}
-              </select>
-          </td>
           <td width="216">
               <table width="215" border="0" align="right" cellpadding="0" cellspacing="0">
                 <tr>
@@ -73,7 +52,6 @@
                   </td>
                   <td>
                       <input type="submit" value="BUSCAR" class="linkverdana11Verde2B" style="height: 27px; width: 80px;"/>
-                      <input type="hidden" value="{{ document_id }}" name="document_id" />
                   </td>
                 </tr>
               </table>
@@ -97,22 +75,21 @@
       <td valign="top">  
         <table width="100%" border="0" cellspacing="0" cellpadding="0">
             <tr>
-              <td colspan="11" bgcolor="#00693E"><img src="{{ asset('bundles/app/images/admin/1pix.gif') }}" width="1" height="1"></td>
+              <td colspan="9" bgcolor="#00693E"><img src="{{ asset('bundles/app/images/admin/1pix.gif') }}" width="1" height="1"></td>
             </tr>
             <tr>
-              <td width="154" bgcolor="#EAE9D7" class="textobaseVerdeB">NOMBRE</td>
-              <td width="5" bgcolor="#EAE9D7" class="textobaseVerdeB">&nbsp;</td>
-              <td width="89" bgcolor="#EAE9D7" class="textobaseVerdeB">ZONA</td>
-              <td width="120" bgcolor="#EAE9D7" class="textobaseVerdeB">PROVINCIA</td>
-              <td width="16" bgcolor="#EAE9D7" class="textobaseVerdeB">&nbsp;</td>
-              <td width="224" bgcolor="#EAE9D7" class="textobaseVerdeB">E-MAIL</td>
-              <td width="16" bgcolor="#EAE9D7" class="textobaseVerdeB">&nbsp;</td>
-              <td width="96" bgcolor="#EAE9D7" class="textobaseVerdeB"><div align="left">TIPO</div></td>
-              <td width="65" bgcolor="#EAE9D7" class="textobaseVerdeB"><div align="center">EDITAR</div></td>
-              <td width="63" bgcolor="#EAE9D7" class="textobaseVerdeB"><div align="center">BORRAR</div></td>
+                <td width="70" height="45" bgcolor="#EAE9D7" class="textobaseVerdeB"><div align="center">TIPO</div></td>
+                <td width="372" bgcolor="#EAE9D7" class="textobaseVerdeB">NOMBRE</td>
+                <td width="20" bgcolor="#EAE9D7" class="textobaseVerdeB">&nbsp;</td>
+                <td width="75" bgcolor="#EAE9D7" class="textobaseVerdeB"><div align="center">PESO</div></td>
+                <td width="75" bgcolor="#EAE9D7" class="textobaseVerdeB"><div align="center">VER</div></td>
+                <td width="75" bgcolor="#EAE9D7" class="textobaseVerdeB"><div align="center">USUARIOS</div></td>
+                <td width="75" bgcolor="#EAE9D7" class="textobaseVerdeB"><div align="center">EDITAR</div></td>
+                <td width="75" bgcolor="#EAE9D7" class="textobaseVerdeB"><div align="center">SUSPENDER</div></td>
+                <td width="75" bgcolor="#EAE9D7" class="textobaseVerdeB"><div align="center">BORRAR</div></td>
             </tr>
             <tr>
-              <td colspan="11" bgcolor="#00693E"><img src="{{ asset('bundles/app/images/admin/1pix.gif') }}" width="1" height="1"></td>
+              <td colspan="9" bgcolor="#00693E"><img src="{{ asset('bundles/app/images/admin/1pix.gif') }}" width="1" height="1"></td>
             </tr>
         </table>
       </td>
@@ -123,36 +100,54 @@
                     <tr>
                       <td>
                         <table width="100%" border="0" cellspacing="0" cellpadding="0">
-                            {% for entity in entities %}
+                            {% for entity in entities %}    
                             <tr>
-                              <td width="45" height="35"><div align="center">
-                                <input type="checkbox" name="checkbox2" value="checkbox">
-                              </div></td>
-                              <td width="150" class="textoBase">{{ entity.lastname | capitalize }} {{ entity.firstname | capitalize }} <br></td>
-                              <td width="6" class="textoBase">&nbsp;</td>
-                              <td width="89"><span class="textoBase">{{ zona[entity.zona] }}</span></td>
-                              <td width="120" class="textoBase">{{ province[entity.province] }}</td>
-                              <td width="15">&nbsp;</td>
-                              <td width="225"><a href="mailto:{{ entity.email }}" class="linkverdana11Gris2">{{ entity.email }}</a></td>
-                              <td width="17">&nbsp;</td>
-                              <td width="96" class="textoBase">{{ type[entity.types] }}</td>
-                              <td width="65">
-                                  <div align="center">
-                                      <a href="{{ path('user_edit', {'id': entity.id})}}">
-                                        <img src="{{ asset('bundles/app/images/admin/ico-editar.gif') }}" width="13" height="13">
-                                      </a>  
-                                  </div>
-                              </td>
-                              <td width="62">
-                                  <div align="center">
-                                      <a href="{{ path('user_delete', {'id': entity.id})}}">
-                                        <img src="{{ asset('bundles/app/images/admin/ico-eliminar.gif') }}" width="14" height="14">
-                                      </a>  
-                                  </div>
-                              </td>
+                                <td width="70" height="45">
+                                    <div align="center">
+                                        <img src="{{ asset('bundles/app/images/front/'~entity.getImgType()) }}" width="25" height="25">
+                                    </div>
+                                </td>
+                                <td width="372" class="textobaseVerdeB">{{ entity.name | capitalize }}</td>
+                                <td width="20">&nbsp;</td>
+                                <td width="75" class="textoBase"><div align="center">{{ entity.size // 1000 }}KB </div></td>
+                                <td width="75">
+                                    <div align="center">
+                                        <a target="_blanck" href="{{ asset('uploads/documents/'~entity.getPath()) }}">
+                                            <img src="{{ asset('bundles/app/images/admin/ico-lupa.gif') }}" width="14" height="14">
+                                        </a>    
+                                    </div>
+                                </td>
+                                <td width="75">
+                                    <div align="center">
+                                        <a href="{{ path('user_list', {'document_id': entity.id}) }}">
+                                            <img src="{{ asset('bundles/app/images/admin/ico-usuarios.gif') }}" title="usuarios ({{ entity.users|length }})" width="14" height="14">
+                                        </a>    
+                                    </div>
+                                </td>    
+                                <td width="75">
+                                    <div align="center">
+                                        <a href="{{ path('document_edit', {'id': entity.id})}}">
+                                          <img src="{{ asset('bundles/app/images/admin/ico-editar.gif') }}" width="13" height="13">
+                                        </a>  
+                                    </div>
+                                </td>
+                                <td width="75">
+                                    <div align="center">
+                                        <a href="{{ path('document_suspend', {'id': entity.id})}}">
+                                            <img src="{{ asset('bundles/app/images/admin/ico-suspender.gif') }}" width="14" height="13">
+                                        </a>    
+                                    </div>
+                                </td>
+                                <td width="75">
+                                    <div align="center">
+                                        <a href="{{ path('document_delete', {'id': entity.id})}}">
+                                          <img src="{{ asset('bundles/app/images/admin/ico-eliminar.gif') }}" width="14" height="14">
+                                        </a>  
+                                    </div>
+                                </td>
                             </tr>
                             <tr>
-                              <td height="1" colspan="11" bgcolor="#B3B3B3"><img src="{{ asset('bundles/app/images/admin/1pix.gif') }}" width="1" height="1"></td>
+                              <td height="1" colspan="9" bgcolor="#B3B3B3"><img src="{{ asset('bundles/app/images/admin/1pix.gif') }}" width="1" height="1"></td>
                             </tr>
                             {% endfor %}
                         </table>
