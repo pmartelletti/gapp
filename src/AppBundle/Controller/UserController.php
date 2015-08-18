@@ -105,7 +105,7 @@ class UserController extends Controller
                 $data = $request->get('user_appbundle_user');
                 
                 $em = $this->getDoctrine()->getManager();
-                $user->addRole("ROLE_SUPER_ADMIN");
+                $user->addRole("ROLE_CUSTOMER");
                 $user->setUsername($data['email']);
                 $user->setUsernameCanonical($data['email']);
 
