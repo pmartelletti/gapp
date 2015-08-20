@@ -1,0 +1,40 @@
+{% extends "AppBundle:Frontend:layout.html.twig" %}
+
+{% block body %}
+<!-- Contact Form -->
+<div class="container">
+    <div class="eight columns">
+        <div class="extra-padding left">
+        <!-- Information -->
+            <!-- Contact Form -->
+            <section id="contact">
+                <!-- Success Message -->
+                {% if error %}
+                    <mark id="message">{{error.message }}</mark>
+                {% endif %}
+                <!-- Form -->
+                <form action="{{ path('members_login_check') }}" method="post">
+                    <fieldset>
+                        <div>
+                            <label>Usuario:</label>
+                            <input name="_username" type="text"  id="username" />
+                        </div>
+
+                        <div>
+                            <label>Contraseña:</label>
+                            <input name="_password" type="password" id="password" />
+                        </div>
+                    </fieldset>
+                    <div id="result"></div>
+                            <input type="submit" class="submit" id="submit" value="ingresar" />
+                            <input type="hidden" name="_target_path" value="members_document" />
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
+                    <div class="clearfix"></div>
+                </form>
+            </section>
+        <!-- Contact Form / End -->
+        </div>
+    </div>
+</div>
+<!-- Container / End -->
+{% endblock body%}

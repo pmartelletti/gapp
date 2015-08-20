@@ -38,7 +38,7 @@ class AdminController extends Controller
     }   
     
     /**
-     * @Route("/login_check", name="login_check")
+     * @Route("admin/login_check", name="admin_login_check")
      */
     public function login_checkAction(Request $request)
     {
@@ -46,7 +46,7 @@ class AdminController extends Controller
     }  
     
     /**
-     * @Route("/logout", name="logout")
+     * @Route("admin/logout", name="logout")
      */
     public function logoutAction()
     {

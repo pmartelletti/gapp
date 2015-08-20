@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!-->
+<html lang="en"> <!--<![endif]-->
+<head>
+<!-- Basic Page Needs
+================================================== -->
+<meta charset="utf-8">
+<title>GAPP - Área Privada</title>
+<!-- Mobile Specific Metas
+================================================== -->
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<!-- CSS
+================================================== -->
+<link rel="stylesheet" href="{{asset('bundles/app/css/front/style.css') }}">
+<link rel="stylesheet" href="{{asset('bundles/app/css/front/colors/blue.css') }}" id="colors">
+<!--[if lt IE 9]>
+	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+</head>
+<body class="fullwidth">
+    <div id="wrapper">
+        <!-- Header
+        ================================================== -->
+        <div class="container">
+            <!-- Logo -->
+            <div class="four columns">
+                    <div id="logo">
+                            <h1><a href="../index.htm"><img src="{{ asset('bundles/app/images/front/gapp-logo.png') }}" alt="OI DC" /></a></h1>
+                    </div>
+            </div>
+            <div class="twelve columns">
+                <a href="#menu" class="menu-trigger"><i class="fa fa-bars"></i> Menu</a>
+                <nav id="navigation">
+                        <ul class="menu" id="responsive">
+                                <li class="demo-button"> <a href="{{ path('homepage') }}">SALIR</a></li>
+                        </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- Titlebar
+        ================================================== -->
+        <section class="titlebar">
+            <div class="la-empresa">
+                <div class="container">
+                    <div class="sixteen columns">
+                            <h2>Área privada</h2>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="container">
+                <div class="sixteen columns">
+                        <h2>Login</h2>
+                        <br>
+                </div>
+        </div>
+        {% block body %}
+        {% endblock body%}
+        <div class="margin-top-80"></div>
+        <!-- Footer Bottom / Start -->
+        <div id="footer-bottom">
+            <!-- Container -->
+            <div class="container">
+                <div class="sixteen columns">
+                  <p><span class="footer-bottom-bold">GAPP - Calidad en Semillas Forrajeras</span><br>
+                    Parque Industrial Pergamino - Ruta 32 km 1,5 - Pergamino - Buenos Aires - (54 02477) 431429 / 432179 - <a href="mailto:gapp@gapp.com.ar">gapp@gapp.com.ar</a></p>
+                  <p>&nbsp;</p>
+                  <p><a href="http://www.2maus.com.ar" target="_blank">designed by: 2MAUS</a></p>
+                </div>
+            </div>
+            <!-- Container / End -->
+        </div>
+        <!-- Footer Bottom / End -->
+        <!-- Back To Top Button -->
+        <div id="backtotop"><a href="#"></a></div>
+    </div>
+    {% block javascripts %}    
+    <!-- Java Script
+    ================================================== -->
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script src="{{asset('bundles/app/js/jquery.jpanelmenu.js') }}"></script>
+    <script src="{{asset('bundles/app/js/jquery.themepunch.plugins.min.js') }}"></script>
+    <script src="{{asset('bundles/app/js/jquery.themepunch.revolution.min.js') }}"></script>
+    <script src="{{asset('bundles/app/js/jquery.themepunch.showbizpro.min.js') }}"></script>
+    <script src="{{asset('bundles/app/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{asset('bundles/app/js/hoverIntent.js') }}"></script>
+    <script src="{{asset('bundles/app/js/superfish.js') }}"></script>
+    <script src="{{asset('bundles/app/js/jquery.pureparallax.js') }}"></script>
+    <script src="{{asset('bundles/app/js/jquery.pricefilter.js') }}"></script>
+    <script src="{{asset('bundles/app/js/jquery.selectric.min.js') }}"></script>
+    <script src="{{asset('bundles/app/js/jquery.royalslider.min.js') }}"></script>
+    <script src="{{asset('bundles/app/js/SelectBox.js') }}"></script>
+    <script src="{{asset('bundles/app/js/modernizr.custom.js') }}"></script>
+    <script src="{{asset('bundles/app/js/waypoints.min.js') }}"></script>
+    <script src="{{asset('bundles/app/js/jquery.flexslider-min.js') }}"></script>
+    <script src="{{asset('bundles/app/js/jquery.counterup.min.js') }}"></script>
+    <script src="{{asset('bundles/app/js/jquery.tooltips.min.js') }}"></script>
+    <script src="{{asset('bundles/app/js/jquery.isotope.min.js') }}"></script>
+    <script src="{{asset('bundles/app/js/puregrid.js') }}"></script>
+    <script src="{{asset('bundles/app/js/stacktable.js') }}"></script>
+    <script src="{{asset('bundles/app/js/custom.js') }}"></script>
+    {% endblock %}
+</body>
+</html>

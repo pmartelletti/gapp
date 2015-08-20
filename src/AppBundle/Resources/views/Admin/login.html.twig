@@ -47,9 +47,9 @@
                                 <tr>
                                     <td>
                                         {% if error %}
-                                            <div>{{error.message }}</div>
+                                            <div style="color: red; font-size: 11px;"><em>{{error.message }}</em></div>
                                         {% endif %}
-                                        <form action="{{ path('login_check') }}" method="post">
+                                        <form action="{{ path('admin_login_check') }}" method="post">
                                             <table width="100%" border="0" cellspacing="0" cellpadding="0">
                                                 <tr>
                                                     <td height="20" valign="top" class="textoBase">Usuario:</td>
