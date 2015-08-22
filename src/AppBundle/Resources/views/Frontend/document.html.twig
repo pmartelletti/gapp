@@ -1,0 +1,35 @@
+{% extends "AppBundle:Frontend:layout.html.twig" %}
+
+{% block title %}
+  <h2>Documentos</h2>
+{% endblock%}    
+
+{% block body %}
+<div class="container cart">
+    <div class="sixteen columns">
+        {% if document %}
+        <!-- Cart -->
+        <table class="cart-table responsive-table">
+            <tr>
+                    <th width="7%">Tipo</th>
+                    <th width="70%"> Nombre</th>
+                    <th width="11%">Peso</th>
+                    <th width="12%">Ver</th>
+            </tr>
+            {% for entity in document%}
+            <!-- Item #1 -->
+            <tr>
+                    <td><img src="{{ asset('bundles/app/images/front/'~entity.getImgType()) }}" alt=""/></td>
+                    <td class="cart-title"><a>{{ entity.name | capitalize }}</a></td>
+                    <td>{{ entity.size // 1000 }} KB</td>
+                    <td><a target="_blanck" href="{{ asset('uploads/documents/'~entity.getPath()) }}" class="button color"></i>VER</a></td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+            No hay documentos registrados
+        {% endif %}
+        <br>
+    </div>
+</div>
+{% endblock %}

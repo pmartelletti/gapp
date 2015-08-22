@@ -57,9 +57,14 @@ class FrontendController extends Controller
     /**
      * @Route("members/document", name="members_document")
      */
-    public function getDocumentByUser(Request $request)
+    public function getDocumentByUserAction(Request $request)
     {
-        echo 'ok';
-        exit();
+        $user = $this->container->get('security.context')->getToken()->getUser();
+        
+        $em = $this->getDoctrine()->getManager();
+        
+        $document = $em->getRepository('AppBundle:Document')->getDocumentByUserId($user->getId());
+        
+        return $this->render('AppBundle:Frontend:document.html.twig', ['document'=>$document]); 
     }
 }

@@ -26,14 +26,19 @@
             <!-- Logo -->
             <div class="four columns">
                     <div id="logo">
-                            <h1><a href="../index.htm"><img src="{{ asset('bundles/app/images/front/gapp-logo.png') }}" alt="OI DC" /></a></h1>
+                            <h1><a href="{{ path('homepage') }}"><img src="{{ asset('bundles/app/images/front/gapp-logo.png') }}" alt="OI DC" /></a></h1>
                     </div>
             </div>
             <div class="twelve columns">
                 <a href="#menu" class="menu-trigger"><i class="fa fa-bars"></i> Menu</a>
                 <nav id="navigation">
                         <ul class="menu" id="responsive">
+                                {% if is_granted('ROLE_CUSTOMER') %} 
+                                <li class="demo-button"> <a href="{{ path('members_document')}}">DOCUMENTOS</a></li>
+                                <li class="demo-button"> <a href="{{ path('members_logout') }}">SALIR</a></li>
+                                {% else %}
                                 <li class="demo-button"> <a href="{{ path('homepage') }}">SALIR</a></li>
+                                {% endif %}
                         </ul>
                 </nav>
             </div>
@@ -45,18 +50,22 @@
                 <div class="container">
                     <div class="sixteen columns">
                             <h2>Área privada</h2>
+                            {% if is_granted('ROLE_CUSTOMER') %}
+                            <h2>Bienvenido {{ app.user.firstname }}</h2>
+                            {% endif %}
                     </div>
                 </div>
             </div>
         </section>
         <div class="container">
                 <div class="sixteen columns">
-                        <h2>Login</h2>
+                        {% block title %}
+                        {% endblock %}    
                         <br>
                 </div>
         </div>
         {% block body %}
-        {% endblock body%}
+        {% endblock %}
         <div class="margin-top-80"></div>
         <!-- Footer Bottom / Start -->
         <div id="footer-bottom">

@@ -23,7 +23,7 @@ class DocumentRepository extends EntityRepository {
              ->leftJoin('d.users', 'u')
              ->where('u.id = :id_user')
              ->andWhere('d.id = :id_document')
-             ->setParameters('id_user', $id_user)
+             ->setParameter('id_user', $id_user)
              ->setParameter('id_document', $id_documnet) ;
                 
         return $q->getQuery()->getResult();         
@@ -45,4 +45,23 @@ class DocumentRepository extends EntityRepository {
         
         return $q->getQuery()->getResult();   
     }
+    
+    /**
+     * 
+     * @param int $user_id
+     * @return object
+     */
+    public function getDocumentByUserId($user_id)
+    {
+         $q = $this->createQueryBuilder('d')
+             ->leftJoin('d.users', 'u')
+             ->where('u.id = :id_user')
+             ->setParameter('id_user', $user_id)    ;
+             
+         
+         return $q->getQuery()->getResult();
+        
+    }     
+    
+    
 }
