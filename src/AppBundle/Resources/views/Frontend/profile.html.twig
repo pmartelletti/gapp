@@ -1,0 +1,47 @@
+{% extends "AppBundle:Frontend:layout.html.twig" %}
+
+{% block title %}
+  <h2>Perfil</h2>
+{% endblock%}    
+
+{% block body %}
+<!-- Contact Form -->
+<div class="container">
+    <div class="eight columns">
+        <div class="extra-padding left">
+        <!-- Information -->
+            <!-- Contact Form -->
+            <section id="contact">
+                <div><em style="color: #10693C ">{% for flashMessage in app.session.flashbag.get('update_info') %}{{ flashMessage }}{% endfor %}</em></div>
+                <div><em style="color: red ">{{ form_errors(form.password.first) }}</em><br/></div> 
+                <form action="{{ path('members_perfil')}}" method="POST">
+                    <fieldset>
+                        <div>
+                            <label>Nombre:</label>
+                            {{ form_widget(form.firstname) }}
+                        </div>    
+                        <div>
+                            <label>Apellido:</label>
+                            {{ form_widget(form.lastname) }}
+                        </div>    
+                        <div>
+                            <label>Nueva Contraseña:</label>
+                            {{ form_widget(form.password.first) }}
+                        </div>
+                        <div>
+                            <label>Confirmar Contraseña:</label>
+                            {{ form_widget(form.password.second) }}
+                        </div>
+                    </fieldset>
+                    <div id="result"></div>
+                            <input type="submit" class="submit" id="submit" value="Cambiar" />
+                           {{ form_row(form._token) }}
+                    <div class="clearfix"></div>
+                </form>
+            </section>
+        <!-- Contact Form / End -->
+        </div>
+    </div>
+</div>
+<!-- Container / End -->
+{% endblock %}
