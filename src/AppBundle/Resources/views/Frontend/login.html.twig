@@ -13,8 +13,9 @@
             <!-- Contact Form -->
             <section id="contact">
                 <!-- Success Message -->
+                <div><em style="color: #10693C ">{% for flashMessage in app.session.flashbag.get('update_info') %}{{ flashMessage }}{% endfor %}</em></div>
                 {% if error %}
-                    <mark id="message">{{error.message }}</mark>
+                    <div><em style="color: red ">{{error.message }}</em><br/></div> 
                 {% endif %}
                 <!-- Form -->
                 <form action="{{ path('members_login_check') }}" method="post">
@@ -35,6 +36,8 @@
                             <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" />
                     <div class="clearfix"></div>
                 </form>
+                <br/>
+                <a href="{{ path('members_recover_password') }}" >¿Olvidaste tu contraseña?</a>    
             </section>
         <!-- Contact Form / End -->
         </div>

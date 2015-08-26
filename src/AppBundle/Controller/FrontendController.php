@@ -90,13 +90,61 @@ class FrontendController extends Controller
                  
                  $user_object->setPlainPassword($data['password']['first']);
                  
-                 $em->persist($user);
+                 $em->persist($user_object);
                  $em->flush();
                  
-                 $this->get('session')->getFlashBag()->set('update_info', 'Se actualizo el perfil');
-                 return $this->redirect($this->generateUrl('members_perfil'));
+                 $this->get('session')->getFlashBag()->set('update_info', 'Se envio un email con su nueva contraseña!!');
+                 return $this->redirect($this->generateUrl('members_login'));
              }
          }
          return $this->render('AppBundle:Frontend:profile.html.twig', ['form'=>$form->createView()]);  
     }
+    
+    /**
+     * @Route("members/recover-password", name="members_recover_password")
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     */
+    public function recoverPasswordAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $error = '';
+        $email = $request->get('email','');
+        
+        if($request->isMethod('POST')){
+            if(filter_var($email, FILTER_VALIDATE_EMAIL)){
+                $user_object = $em->getRepository('AppBundle:User')->findOneByEmail($email);
+                if($user_object){
+                    
+                    $password = uniqid(time());
+                    
+                    $user_object->setPlainPassword($password);
+                    
+                    $em->persist($user_object);
+                    $em->flush();
+                    
+                    $message = \Swift_Message::newInstance()
+                    ->setSubject('Recupera tu cuenta')
+                    ->setFrom($email)
+                    ->setTo('no-reply@gapp.com')
+                    ->setBody(
+                        $this->renderView(
+                            'AppBundle:Emails:recoverpassword.html.twig',
+                            array('email' => $email, 'password'=>$password)
+                        ),
+                        'text/html'
+                    );
+                    $this->get('mailer')->send($message);
+                    
+                    $this->get('session')->getFlashBag()->set('update_info', 'Se envio un email con su nueva contraseña!!');
+                    return $this->redirect($this->generateUrl('members_perfil'));
+                }else{
+                    $error = 'El email no pertenece a un usuario registrado ';  
+                }
+            }else{
+              $error = 'Formato de email incorrecto';  
+            } 
+        }
+        
+        return $this->render('AppBundle:Frontend:recoverpassword.html.twig', ['error'=>$error]);  
+    }        
 }

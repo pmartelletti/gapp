@@ -50,6 +50,7 @@ security:
     access_control:
         - { path: ^/members/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /members/recover-password, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/$, role: ROLE_ADMIN }
         - { path: ^/members/.*, role: ROLE_CUSTOMER }
         - { path: ^/$, role: IS_AUTHENTICATED_ANONYMOUSLY }

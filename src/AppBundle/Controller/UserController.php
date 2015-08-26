@@ -108,9 +108,23 @@ class UserController extends Controller
                 $user->addRole("ROLE_CUSTOMER");
                 $user->setUsername($data['email']);
                 $user->setUsernameCanonical($data['email']);
+                $user->setEnabled(1);
 
                 $em->persist($user);
                 $em->flush();
+                
+                $message = \Swift_Message::newInstance()
+                ->setSubject('Recupera tu cuenta')
+                ->setFrom($email)
+                ->setTo('no-reply@gapp.com')
+                ->setBody(
+                    $this->renderView(
+                        'AppBundle:Emails:registration.html.twig',
+                        array('email' => $user->getEmail(), 'password'=>$data['plainPassword'])
+                    ),
+                    'text/html'
+                );
+                $this->get('mailer')->send($message);
                 
                 $this->get('session')->getFlashBag()->set('update_info', 'Se actualizo el registro');
                 return $this->redirect($this->generateUrl('user_list'));
