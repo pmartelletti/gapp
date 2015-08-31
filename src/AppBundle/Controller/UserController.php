@@ -39,7 +39,7 @@ class UserController extends Controller
         
         $entities = $em->getRepository('AppBundle:User')->findByRoleAttendant($s_name, $s_zona, $s_type, $s_province, $document_id);
 
-        if($request->isXmlHttpRequest()) {
+        if( $request->isXmlHttpRequest() ) {
             // return json
             return new JsonResponse(array_map(function(User $user){
                 return $user->getId();
