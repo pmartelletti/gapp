@@ -105,7 +105,8 @@ class UserRepository extends EntityRepository {
         $array = [];
         
         foreach ($users AS $v){
-            $array[$v->getId()] = $v->getNameCompleted();
+//            $array[$v->getId()] = $v->getNameCompleted();
+            $array[] = $v->getId();
         }
         
         return $array;

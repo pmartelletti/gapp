@@ -41,7 +41,7 @@
 {% block body %}
 {{ form_errors(form) }}    
 <form action="" method="POST" enctype="multipart/form-data">
-    <table width="530" border="0" align="center" cellpadding="7" cellspacing="0">
+    <table width="580px" border="0" align="center" cellpadding="7" cellspacing="0">
         <tr>
           <td height="10" valign="top" class="textoBaseB">
               <div align="right">{{ form_label(form.name) }}:</div>
@@ -89,30 +89,37 @@
                 <div align="right">Usuarios:</div>
             </td>
             <td>
-                <table>
-                    <tr>
-                        <td style="width: 50%">
-                            <select style="width: 170px;" name="from" id="multiselect" class="form-control" size="8" multiple="multiple">
-                                {% for item in user %}
-                                    <option value="{{ item.getId() }}" >{{ item.getNameCompleted() | capitalize }}</option>
-                                {% endfor %}    
-                            </select>
-                        </td>
-                        <td style="width: 15%">
-                            <button type="button" id="multiselect_rightAll" class="btn btn-block"><i class="glyphicon glyphicon-forward"></i></button><br/>
-                            <button type="button" id="multiselect_rightSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-right"></i></button><br/>
-                            <button type="button" id="multiselect_leftSelected" class="btn btn-block"><i class="glyphicon glyphicon-chevron-left"></i></button><br/>
-                            <button type="button" id="multiselect_leftAll" class="btn btn-block"><i class="glyphicon glyphicon-backward"></i></button><br/>    
-                        </td>
-                        <td style="width: 40%">
-                            <select style="width: 170px;" name="to[]" id="multiselect_to" class="form-control" size="8" multiple="multiple">
-                                {% for k,v in user_array_document %}
-                                    <option value="{{ k }}">{{ v | capitalize }}</option>
-                                {% endfor %} 
-                            </select>
-                        </td>
-                    </tr>
-                </table>
+                <div class="filtros" style="margin-bottom: 10px">
+                    <select name="s_zona" size="1" class="celda7" style="font-family: Verdana; font-size: 11px">
+                        {% for k, z in zonas %}
+                            <option value="{{ k }}">{{ z }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="s_type" size="1" class="celda7" style="font-family: Verdana; font-size: 11px">
+                        {% for k, t in tipos %}
+                            <option value="{{ k }}">{{ t }}</option>
+                        {% endfor %}
+                    </select>
+                    <select name="s_province" size="1" class="celda7" style="font-family: Verdana; font-size: 11px">
+                        {% for k, p in provincias %}
+                            <option value="{{ k }}">{{ p }}</option>
+                        {% endfor %}
+                    </select>
+                    <p id="s_zona" class="tags">
+                        <span>Zonas: </span>
+                    </p>
+                    <p id="s_province" class="tags">
+                        <span>Provincias: </span>
+                    </p>
+                </div>
+                <select style="width: 100%;" name="to[]" id="multiselect_to" class="form-control" multiple="multiple">
+                    {% for user in users %}
+                        <option {% if user.id in user_array_document %}selected="selected"{% endif %} value="{{ user.id }}">{{ user }}</option>
+                    {% endfor %}
+                    {#{% for k,v in user_array_document %}#}
+                        {#<option value="{{ k }}">{{ v | capitalize }}</option>#}
+                    {#{% endfor %}#}
+                </select>
             </td>
         </tr>
         <tr>
@@ -129,8 +136,46 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-    jQuery(document).ready(function($) {
-            $('#multiselect').multiselect();
-    });
+        $('#multiselect_to').select2();
+        $(document).ready(function(){
+            // do something with the selects
+            $('.filtros select').change(function(e){
+                e.preventDefault();
+
+                var holder = $(this).attr('name');
+                var button = $(this).val();
+                $(this).find('option:selected').attr('disabled', 'disabled');
+                var url = '/admin/user/list?' + holder+ '=' + button;
+                $.get(url, function(options) {
+                    var values = options.concat($('#multiselect_to').val());
+                    $('#multiselect_to').val(values).trigger('change');
+                    addButtonInHolder(holder, button, url);
+                }, 'json');
+            });
+            $('.filtros .tags').on('click', 'a', function(e) {
+                e.preventDefault();
+                var url = $(this).attr('href');
+                $(this).remove();
+                $('select').find('option[value="' + $(this).text() +'"]').removeAttr('disabled');
+                $.get(url, function(options) {
+                    var old_values = $('#multiselect_to').val();
+                    var values = old_values.filter(function(elem){
+                        return options.indexOf(parseInt(elem)) === -1;
+                    });
+                    console.log(values);
+                    $('#multiselect_to').val(values).trigger('change');
+
+                });
+            });
+        });
+        function addButtonInHolder(holder, button, url){
+            console.log(button);
+            $("#" + holder).append($("<a>").attr('href', url).addClass('pure-button pure-button-primary').text(button));
+        }
     </script>
-{% endblock %}    
+{% endblock %}
+{% block inline_css %}
+.filtros .pure-button {
+    margin-right: 10px;
+}
+{% endblock %}

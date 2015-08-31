@@ -27,9 +27,9 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $errorMessage = "";
         
-        $province = Commons::getArrayProvince('Filtrar por Provincia');
-        $zona     = Commons::getArrayZona('Filtrar por Zona');
-        $type     = Commons::getArrayType('Filtrar por Tipo');
+        $province = Commons::getArrayProvince('Todas las provincias');
+        $zona     = Commons::getArrayZona('Todas las zonas');
+        $type     = Commons::getArrayType('Todos los usuarios');
 
         $s_name = $request->get('s_name','');
         $s_zona = $request->get('s_zona','');
@@ -38,6 +38,13 @@ class UserController extends Controller
         $s_province = $request->get('s_province','');
         
         $entities = $em->getRepository('AppBundle:User')->findByRoleAttendant($s_name, $s_zona, $s_type, $s_province, $document_id);
+
+        if($request->isXmlHttpRequest()) {
+            // return json
+            return new JsonResponse(array_map(function(User $user){
+                return $user->getId();
+            }, $entities));
+        }
         
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
@@ -86,7 +93,7 @@ class UserController extends Controller
         $form  = $this->createEditForm($user, $id);
         $type  = 'edit';
         $label = '    EDITAR    ';
-        return $this->forward('AppBundle:User:form', ['form'=>$form, 'user'=>$user, 'label'=>$label, 'type'=>$type]);
+        return $this->forward('AppBundle:User:form', ['form'=>$form, 'user'=>$user, 'label'=>$label, 'type'=>$type, 'sendMail' => false]);
         
     }
     
@@ -101,6 +108,7 @@ class UserController extends Controller
             $form->handleRequest($request);
 
             if ($form->isValid()) {
+                $sendMail = $request->get('sendMail', true);
                 
                 $data = $request->get('user_appbundle_user');
                 
@@ -112,21 +120,22 @@ class UserController extends Controller
 
                 $em->persist($user);
                 $em->flush();
-                
-                if($type != 'edit'){
+
+                if($sendMail) {
                     $message = \Swift_Message::newInstance()
-                    ->setSubject('Ingreso a Gapp')
-                    ->setFrom($user->getEmail())
-                    ->setTo('no-reply@gapp.com')
-                    ->setBody(
-                        $this->renderView(
-                            'AppBundle:Emails:registration.html.twig',
-                            array('email' => $user->getEmail(), 'password'=>$data['plainPassword'])
-                        ),
-                        'text/html'
-                    );
+                        ->setSubject('Recupera tu cuenta')
+                        ->setTo($user->getEmail())
+                        ->setFrom('no-reply@gapp.com')
+                        ->setBody(
+                            $this->renderView(
+                                'AppBundle:Emails:registration.html.twig',
+                                array('email' => $user->getEmail(), 'password'=>$data['plainPassword'])
+                            ),
+                            'text/html'
+                        );
                     $this->get('mailer')->send($message);
                 }
+                
                 $this->get('session')->getFlashBag()->set('update_info', 'Se actualizo el registro');
                 return $this->redirect($this->generateUrl('user_list'));
             }
@@ -174,7 +183,7 @@ class UserController extends Controller
     private function createCreateForm(User $entity) {
         $form = $this->createForm(new UserType('user_userbundle_user'), $entity, array(
             'action' => $this->generateUrl('user_new'),
-            'method' => 'POST'
+            'method' => 'POST',
         ));
 
         $form->add(

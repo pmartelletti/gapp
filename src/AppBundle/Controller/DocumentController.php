@@ -1,6 +1,7 @@
 <?php
 namespace AppBundle\Controller;
 
+use AppBundle\Utils\Commons;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -21,28 +22,28 @@ class DocumentController extends Controller
      * @Route("admin/document/list", name="doc_list")
      * @Method("GET")
      */
-    public function indexAction(Request $request) 
-    { 
+    public function indexAction(Request $request)
+    {
         $em = $this->getDoctrine()->getManager();
         $errorMessage = "";
-        
-        $s_name = $request->get('s_name','');
-        
+
+        $s_name = $request->get('s_name', '');
+
         $entities = $em->getRepository('AppBundle:Document')->getDocumentAllByFilter($s_name);
-        
+
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-                $entities, $request->get('page', 1) /* page number */, 10
+            $entities, $request->get('page', 1) /* page number */, 10
         );
         if (!$entities) {
             $errorMessage = 'No existen registros guardados';
         }
-        
-        return $this->render('AppBundle:Document:list.html.twig',['entities' => $pagination, 
-            'message'  => $errorMessage,
-            's_name'=>$s_name]);
+
+        return $this->render('AppBundle:Document:list.html.twig', ['entities' => $pagination,
+            'message' => $errorMessage,
+            's_name' => $s_name]);
     }
-    
+
     /**
      * New Document entities.
      *
@@ -50,13 +51,13 @@ class DocumentController extends Controller
      */
     public function newDocumentAction(Request $request)
     {
-        $document  = new Document();
-        $form  = $this->createCreateForm($document);
-        $type  = 'new';
+        $document = new Document();
+        $form = $this->createCreateForm($document);
+        $type = 'new';
         $label = '    CREAR    ';
-        return $this->forward('AppBundle:Document:form', ['form'=>$form, 'document'=>$document, 'label'=>$label, 'type'=>$type]);
+        return $this->forward('AppBundle:Document:form', ['form' => $form, 'document' => $document, 'label' => $label, 'type' => $type]);
     }
-    
+
     /**
      * Edit Document entities.
      *
@@ -66,14 +67,14 @@ class DocumentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $document = $em->getRepository('AppBundle:Document')->findOneById($id);
-        
-        $form  = $this->createEditForm($document, $id);
-        $type  = 'edit';
+
+        $form = $this->createEditForm($document, $id);
+        $type = 'edit';
         $label = '    EDITAR    ';
-        return $this->forward('AppBundle:Document:form', ['form'=>$form, 'document'=>$document, 'label'=>$label, 'type'=>$type]);
-        
+        return $this->forward('AppBundle:Document:form', ['form' => $form, 'document' => $document, 'label' => $label, 'type' => $type]);
+
     }
-    
+
     /**
      * form Document entities.
      *
@@ -81,59 +82,63 @@ class DocumentController extends Controller
     public function formAction(Request $request, $form, $document, $label, $type)
     {
         $em = $this->getDoctrine()->getManager();
-        
+
         $user_repository = $em->getRepository('AppBundle:User');
-        
-        $user = $user_repository->findUserNotDocument($document->getUsers());
-        
+
+        $user = $user_repository->findAll();//$user_repository->findUserNotDocument($document->getUsers());
+
         $user_array_document = $user_repository->getArrayData($document->getUsers());
-        
-        if($request->isMethod('POST')){
+
+        if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
             $to = $request->get('to', '');
-            
+
             $user_to = $user_repository->getUsersInId($to);
-            
-            $user_array_document = $user_repository->getArrayData($user_to); 
-            
+
+            $user_array_document = $user_repository->getArrayData($user_to);
+
             if ($form->isValid()) {
-               
+
                 $em->persist($document);
                 $em->flush();
-                
-                foreach ($document->getUsers() AS $user_document){
+
+                foreach ($document->getUsers() AS $user_document) {
                     $document->removeUser($user_document);
                     $user_document->removeDocument($document);
                     $em->persist($user_document);
                     $em->persist($document);
                     $em->flush();
                 }
-                
-                foreach ($user_to AS $user){
+
+                foreach ($user_to AS $user) {
                     $document->addUser($user);
                     $user->addDocument($document);
                     $em->persist($user);
                     $em->persist($document);
-                    $em->flush();     
+                    $em->flush();
                 }
-                
+
                 $this->get('session')->getFlashBag()->set('update_info', 'Se actualizo el registro');
                 return $this->redirect($this->generateUrl('doc_list'));
             }
         }
-        return $this->render('AppBundle:Document:form.html.twig',
-                ['form'=>$form->createView(),
-                 'label'=>$label,
-                 'type'=>$type,
-                 'user'=>$user,
-                 'user_array_document'=>$user_array_document,
-                 'document'=>$document ]);
+        return $this->render('AppBundle:Document:form.html.twig', [
+            'form' => $form->createView(),
+            'provincias' => Commons::getArrayProvince('Todas las provincias'),
+            'zonas' => Commons::getArrayZona('Todas las zonas'),
+            'tipos' => Commons::getArrayType('Todos los usuarios'),
+            'label' => $label,
+            'type'=>$type,
+            'users'=>$user,
+            'user_array_document'=>$user_array_document,
+            'document'=>$document
+        ]);
     }
-    
-    
+
+
     /**
-     * 
+     *
      * Delete Document entities.
      *
      * @Route("admin/document/{id}/delete", name="document_delete")
@@ -142,27 +147,29 @@ class DocumentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $document = $em->getRepository('AppBundle:Document')->findOneById($id);
-        
-        if(!$document){return $this->redirect($this->generateUrl('document_list'));}
-        
-        foreach ($document->getUsers() AS $user_document){
+
+        if (!$document) {
+            return $this->redirect($this->generateUrl('document_list'));
+        }
+
+        foreach ($document->getUsers() AS $user_document) {
             $document->removeUser($user_document);
             $user_document->removeDocument($document);
             $em->persist($user_document);
             $em->persist($document);
             $em->flush();
         }
-        
+
         $em->remove($document);
         $em->flush();
-        
+
         $this->get('session')->getFlashBag()->set('delete_info', 'Se elimino el registro');
-        
+
         return $this->redirect($this->generateUrl('document_list'));
     }
-    
+
     /**
-     * 
+     *
      * suspend Document entities.
      *
      * @Route("admin/document/{id}/suspend", name="document_suspend")
@@ -171,19 +178,21 @@ class DocumentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $document = $em->getRepository('AppBundle:Document')->findOneById($id);
-        
-        if(!$document){return $this->redirect($this->generateUrl('document_list'));}
-        
+
+        if (!$document) {
+            return $this->redirect($this->generateUrl('document_list'));
+        }
+
         $document->setEnable(0);
-        
+
         $em->persist($document);
         $em->flush();
-        
+
         $this->get('session')->getFlashBag()->set('delete_info', 'Se actualizo el registro');
-        
+
         return $this->redirect($this->generateUrl('document_list'));
     }
-    
+
     /**
      * Creates a form to create a Document entity.
      *
@@ -191,26 +200,27 @@ class DocumentController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(Document $entity) {
+    private function createCreateForm(Document $entity)
+    {
         $form = $this->createForm(new DocumentType('document_appbundle_document'), $entity, array(
             'action' => $this->generateUrl('document_new'),
             'method' => 'POST',
         ));
-        
+
         $form->add(
-                    'file', 'file', array(
-                        'label' => 'Documento',
-                        "mapped" => TRUE,
-                        'required' => true,
-                        'attr' => array(
-                            "class" => "celda3",
-                        )
-                    )
-                );
-        
+            'file', 'file', array(
+                'label' => 'Documento',
+                "mapped" => TRUE,
+                'required' => true,
+                'attr' => array(
+                    "class" => "celda3",
+                )
+            )
+        );
+
         return $form;
     }
-    
+
     /**
      * Creates a form to edit a Document entity.
      *
@@ -218,22 +228,23 @@ class DocumentController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(Document $entity, $id) {
+    private function createEditForm(Document $entity, $id)
+    {
         $form = $this->createForm(new DocumentType('document_appbundle_document'), $entity, array(
-            'action' => $this->generateUrl('document_edit', ['id'=>$id]),
+            'action' => $this->generateUrl('document_edit', ['id' => $id]),
             'method' => 'POST',
         ));
-        
+
         $form->add(
-                    'file', 'file', array(
-                        'label' => 'Documento',
-                        "mapped" => true,
-                        'required' => FALSE,
-                        'attr' => array(
-                            "class" => "celda3",
-                        )
-                    )
-                );
+            'file', 'file', array(
+                'label' => 'Documento',
+                "mapped" => true,
+                'required' => FALSE,
+                'attr' => array(
+                    "class" => "celda3",
+                )
+            )
+        );
 
         return $form;
     }
