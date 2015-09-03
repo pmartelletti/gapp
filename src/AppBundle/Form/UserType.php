@@ -134,7 +134,7 @@ class UserType extends AbstractType {
                         "mapped" => true,
                         'attr' => array(
                             "class" => "celda3",
-                            "maxlength" => 32 //Longitud máxima
+                            "maxlength" => 32,//Longitud máxima
                         )
                     )
                 );

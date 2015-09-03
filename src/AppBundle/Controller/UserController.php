@@ -113,19 +113,20 @@ class UserController extends Controller
                 $em->persist($user);
                 $em->flush();
                 
-                $message = \Swift_Message::newInstance()
-                ->setSubject('Recupera tu cuenta')
-                ->setFrom($email)
-                ->setTo('no-reply@gapp.com')
-                ->setBody(
-                    $this->renderView(
-                        'AppBundle:Emails:registration.html.twig',
-                        array('email' => $user->getEmail(), 'password'=>$data['plainPassword'])
-                    ),
-                    'text/html'
-                );
-                $this->get('mailer')->send($message);
-                
+                if($type != 'edit'){
+                    $message = \Swift_Message::newInstance()
+                    ->setSubject('Ingreso a Gapp')
+                    ->setFrom($user->getEmail())
+                    ->setTo('no-reply@gapp.com')
+                    ->setBody(
+                        $this->renderView(
+                            'AppBundle:Emails:registration.html.twig',
+                            array('email' => $user->getEmail(), 'password'=>$data['plainPassword'])
+                        ),
+                        'text/html'
+                    );
+                    $this->get('mailer')->send($message);
+                }
                 $this->get('session')->getFlashBag()->set('update_info', 'Se actualizo el registro');
                 return $this->redirect($this->generateUrl('user_list'));
             }
@@ -173,15 +174,16 @@ class UserController extends Controller
     private function createCreateForm(User $entity) {
         $form = $this->createForm(new UserType('user_userbundle_user'), $entity, array(
             'action' => $this->generateUrl('user_new'),
-            'method' => 'POST',
+            'method' => 'POST'
         ));
 
         $form->add(
-            'plainPassword', 'password', array(
+            'plainPassword', 'text', array(
                 'label' => 'Contraseña',
                 'attr' => array(
                     "class" => "celda3",
-                    "maxlength" => 32 //Longitud máxima
+                    "maxlength" => 32,
+                    "autocomplete"=>"off"
                 )
             )
         );
