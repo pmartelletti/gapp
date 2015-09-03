@@ -128,14 +128,16 @@ class UserType extends AbstractType {
                         )
                     )
                 )
-                ->add(
-                    'activity', 'text', array(
-                        'label' => 'Actividad',
-                        "mapped" => true,
-                        'attr' => array(
-                            "class" => "celda3",
-                            "maxlength" => 32,//Longitud máxima
-                        )
+            )
+            ->add(
+                'activity', 'text', array(
+                    'label' => 'Actividad',
+                    "mapped" => true,
+                    "required" => false,
+                    'attr' => array(
+                        "class" => "celda3",
+                        "maxlength" => 32, //Longitud máxima,
+                        "autocomplete" => 'off'
                     )
                 );
     }

@@ -39,7 +39,8 @@ class UserController extends Controller
         
         $entities = $em->getRepository('AppBundle:User')->findByRoleAttendant($s_name, $s_zona, $s_type, $s_province, $document_id);
 
-        if( $request->isXmlHttpRequest() ) {
+        if(
+        $request->isXmlHttpRequest() ) {
             // return json
             return new JsonResponse(array_map(function(User $user){
                 return $user->getId();
@@ -136,7 +137,7 @@ class UserController extends Controller
                     $this->get('mailer')->send($message);
                 }
                 
-                $this->get('session')->getFlashBag()->set('update_info', 'Se actualizo el registro');
+                $this->get('session')->getFlashBag()->set('update_info', 'Se actualizó el registro');
                 return $this->redirect($this->generateUrl('user_list'));
             }
         }
