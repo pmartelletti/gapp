@@ -14,12 +14,15 @@ use AppBundle\Form\UserType;
 use AppBundle\Entity\User;
 use AppBundle\Utils\Commons;
 
+/**
+ * @Route("/administrador/user")
+ */
 class UserController extends Controller
 {
     /**
      * Lists all User entities.
      *
-     * @Route("admin/user/list", name="user_list")
+     * @Route("/list", name="user_list")
      * @Method("GET")
      */
     public function indexAction(Request $request) 
@@ -70,7 +73,7 @@ class UserController extends Controller
     /**
      * New User entities.
      *
-     * @Route("admin/user/new", name="user_new")
+     * @Route("/new", name="user_new")
      */
     public function newUserAction(Request $request)
     {
@@ -84,7 +87,7 @@ class UserController extends Controller
     /**
      * Edit User entities.
      *
-     * @Route("admin/user/{id}/edit", name="user_edit")
+     * @Route("/{id}/edit", name="user_edit")
      */
     public function editUserAction(Request $request, $id)
     {
@@ -148,7 +151,7 @@ class UserController extends Controller
      * 
      * Delete User entities.
      *
-     * @Route("admin/user/{id}/delete", name="user_delete")
+     * @Route("/{id}/delete", name="user_delete")
      */
     public function deleteAction(Request $request, $id)
     {

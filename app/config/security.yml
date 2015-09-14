@@ -13,26 +13,26 @@ security:
 
     firewalls:
         admin_secured_area:
-            pattern: /admin/.*
+            pattern: /administrador/.*
             provider: fos_userbundle
             anonymous: ~
             form_login:
                 csrf_provider: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
-                check_path: /admin/login_check
-                login_path: /admin/login
+                check_path: /administrador/login_check
+                login_path: /administrador/login
             logout:
-                path:   /admin/logout
+                path:   /administrador/logout
                 target: /
         members_secured_area:
-            pattern: /members/.*
+            pattern: /clientes/.*
             provider: fos_userbundle
             anonymous: ~
             form_login:
                 csrf_provider: security.csrf.token_manager # Use form.csrf_provider instead for Symfony <2.4
-                check_path: /members/login_check
-                login_path: /members/login
+                check_path: /clientes/login_check
+                login_path: /clientes/login
             logout:
-                path:   /members/logout
+                path:   /clientes/logout
                 target: /
     #    main:
     #        pattern: ^/
@@ -48,9 +48,9 @@ security:
     #        anonymous:    true
 
     access_control:
-        - { path: ^/members/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: /members/recover-password, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/$, role: ROLE_ADMIN }
-        - { path: ^/members/.*, role: ROLE_CUSTOMER }
+        - { path: ^/clientes/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/administrador/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: /clientess/recover-password, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/administrador/$, role: ROLE_ADMIN }
+        - { path: ^/clientes/.*, role: ROLE_CUSTOMER }
         - { path: ^/$, role: IS_AUTHENTICATED_ANONYMOUSLY }

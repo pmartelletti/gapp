@@ -13,13 +13,15 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use AppBundle\Form\DocumentType;
 use AppBundle\Entity\Document;
 
-
+/**
+ * @Route("/administrador/document")
+ */
 class DocumentController extends Controller
 {
     /**
      * Lists all User entities.
      *
-     * @Route("admin/document/list", name="doc_list")
+     * @Route("/list", name="doc_list")
      * @Method("GET")
      */
     public function indexAction(Request $request)
@@ -47,7 +49,7 @@ class DocumentController extends Controller
     /**
      * New Document entities.
      *
-     * @Route("admin/document/new", name="document_new")
+     * @Route("/new", name="document_new")
      */
     public function newDocumentAction(Request $request)
     {
@@ -61,7 +63,7 @@ class DocumentController extends Controller
     /**
      * Edit Document entities.
      *
-     * @Route("admin/document/{id}/edit", name="document_edit")
+     * @Route("/{id}/edit", name="document_edit")
      */
     public function editUserAction(Request $request, $id)
     {
@@ -141,7 +143,7 @@ class DocumentController extends Controller
      *
      * Delete Document entities.
      *
-     * @Route("admin/document/{id}/delete", name="document_delete")
+     * @Route("/{id}/delete", name="document_delete")
      */
     public function deleteAction(Request $request, $id)
     {
@@ -172,7 +174,7 @@ class DocumentController extends Controller
      *
      * suspend Document entities.
      *
-     * @Route("admin/document/{id}/suspend", name="document_suspend")
+     * @Route("/{id}/suspend", name="document_suspend")
      */
     public function suspendAction(Request $request, $id)
     {

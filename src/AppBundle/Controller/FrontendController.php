@@ -8,6 +8,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
 use AppBundle\Form\ChangePasswordType;
 
+/**
+ * @Route("/clientes")
+ */
 class FrontendController extends Controller
 {
     /**
@@ -19,7 +22,7 @@ class FrontendController extends Controller
     }
     
     /**
-     * @Route("members/login", name="members_login")
+     * @Route("/login", name="_login")
      */
     public function loginAction(Request $request)
     {
@@ -39,7 +42,7 @@ class FrontendController extends Controller
     }
     
     /**
-     * @Route("members/login_check", name="members_login_check")
+     * @Route("/login_check", name="_login_check")
      */
     public function login_checkAction(Request $request)
     {
@@ -47,7 +50,7 @@ class FrontendController extends Controller
     }  
     
     /**
-     * @Route("members/logout", name="members_logout")
+     * @Route("/logout", name="_logout")
      */
     public function logoutAction()
     {
@@ -56,7 +59,7 @@ class FrontendController extends Controller
     
     
     /**
-     * @Route("members/document", name="members_document")
+     * @Route("/document", name="_document")
      */
     public function getDocumentByUserAction(Request $request)
     {
@@ -70,7 +73,7 @@ class FrontendController extends Controller
     }
     
     /**
-     * @Route("members/perfil", name="members_perfil")
+     * @Route("/perfil", name="_perfil")
      */
     public function profileAction(Request $request)
     {
@@ -94,14 +97,14 @@ class FrontendController extends Controller
                  $em->flush();
                  
                  $this->get('session')->getFlashBag()->set('update_info', 'Se envio un email con su nueva contraseña!!');
-                 return $this->redirect($this->generateUrl('members_login'));
+                 return $this->redirect($this->generateUrl('_login'));
              }
          }
          return $this->render('AppBundle:Frontend:profile.html.twig', ['form'=>$form->createView()]);  
     }
     
     /**
-     * @Route("members/recover-password", name="members_recover_password")
+     * @Route("/recover-password", name="_recover_password")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function recoverPasswordAction(Request $request)
@@ -136,7 +139,7 @@ class FrontendController extends Controller
                     $this->get('mailer')->send($message);
                     
                     $this->get('session')->getFlashBag()->set('update_info', 'Se envio un email con su nueva contraseña!!');
-                    return $this->redirect($this->generateUrl('members_perfil'));
+                    return $this->redirect($this->generateUrl('_perfils'));
                 }else{
                     $error = 'El email no pertenece a un usuario registrado ';  
                 }

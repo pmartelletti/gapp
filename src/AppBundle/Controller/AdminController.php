@@ -7,10 +7,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\SecurityContext;
 
+/**
+ * @Route("/administrador")
+ */
 class AdminController extends Controller
 {
     /**
-     * @Route("admin/login", name="admin_login")
+     * @Route("/login", name="admin_login")
      */
     public function loginAction(Request $request)
     {
@@ -30,7 +33,7 @@ class AdminController extends Controller
     }
     
     /**
-     * @Route("/admin/menu", name="admin_menu")
+     * @Route("/menu", name="admin_menu")
      */
     public function menuAction()
     {
@@ -38,7 +41,7 @@ class AdminController extends Controller
     }   
     
     /**
-     * @Route("admin/login_check", name="admin_login_check")
+     * @Route("/login_check", name="admin_login_check")
      */
     public function login_checkAction(Request $request)
     {
@@ -46,7 +49,7 @@ class AdminController extends Controller
     }  
     
     /**
-     * @Route("admin/logout", name="logout")
+     * @Route("/logout", name="logout")
      */
     public function logoutAction()
     {
