@@ -55,11 +55,10 @@ class FrontendController extends Controller
     public function logoutAction()
     {
         
-    }  
-    
+    }
     
     /**
-     * @Route("/document", name="_document")
+     * @Route("/document", name="member_document")
      */
     public function getDocumentByUserAction(Request $request)
     {
@@ -73,7 +72,7 @@ class FrontendController extends Controller
     }
     
     /**
-     * @Route("/perfil", name="_perfil")
+     * @Route("/perfil", name="members_perfil")
      */
     public function profileAction(Request $request)
     {
@@ -104,7 +103,7 @@ class FrontendController extends Controller
     }
     
     /**
-     * @Route("/recover-password", name="_recover_password")
+     * @Route("/recover-password", name="members_recover_password")
      * @param \Symfony\Component\HttpFoundation\Request $request
      */
     public function recoverPasswordAction(Request $request)
