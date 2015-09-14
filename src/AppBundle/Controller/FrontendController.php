@@ -22,7 +22,7 @@ class FrontendController extends Controller
     }
     
     /**
-     * @Route("/login", name="_login")
+     * @Route("/login", name="members_login")
      */
     public function loginAction(Request $request)
     {
@@ -42,7 +42,7 @@ class FrontendController extends Controller
     }
     
     /**
-     * @Route("/login_check", name="_login_check")
+     * @Route("/login_check", name="members_login_check")
      */
     public function login_checkAction(Request $request)
     {
@@ -50,7 +50,7 @@ class FrontendController extends Controller
     }  
     
     /**
-     * @Route("/logout", name="_logout")
+     * @Route("/logout", name="members_logout")
      */
     public function logoutAction()
     {
