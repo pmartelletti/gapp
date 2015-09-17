@@ -25,51 +25,52 @@ class UserController extends Controller
      * @Route("/list", name="user_list")
      * @Method("GET")
      */
-    public function indexAction(Request $request) 
-    { 
+    public function indexAction(Request $request)
+    {
         $em = $this->getDoctrine()->getManager();
         $errorMessage = "";
-        
-        $province = Commons::getArrayProvince('Todas las provincias');
-        $zona     = Commons::getArrayZona('Todas las zonas');
-        $type     = Commons::getArrayType('Todos los usuarios');
 
-        $s_name = $request->get('s_name','');
-        $s_zona = $request->get('s_zona','');
-        $s_type = $request->get('s_type','');
-        $document_id = $request->get('document_id','');
-        $s_province = $request->get('s_province','');
-        
+        $province = Commons::getArrayProvince('Todas las provincias');
+        $zona = Commons::getArrayZona('Todas las zonas');
+        $type = Commons::getArrayType('Todos los usuarios');
+
+        $s_name = $request->get('s_name', '');
+        $s_zona = $request->get('s_zona', '');
+        $s_type = $request->get('s_type', '');
+        $document_id = $request->get('document_id', '');
+        $s_province = $request->get('s_province', '');
+
         $entities = $em->getRepository('AppBundle:User')->findByRoleAttendant($s_name, $s_zona, $s_type, $s_province, $document_id);
 
-        if(
-        $request->isXmlHttpRequest() ) {
+        if (
+        $request->isXmlHttpRequest()
+        ) {
             // return json
-            return new JsonResponse(array_map(function(User $user){
+            return new JsonResponse(array_map(function (User $user) {
                 return $user->getId();
             }, $entities));
         }
-        
+
         $paginator = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-                $entities, $request->get('page', 1) /* page number */, 10
+            $entities, $request->get('page', 1) /* page number */, 10
         );
         if (!$entities) {
             $errorMessage = 'No existen registros guardados';
         }
-        
-        return $this->render('AppBundle:User:list.html.twig',['entities' => $pagination, 
-            'message'  => $errorMessage,
+
+        return $this->render('AppBundle:User:list.html.twig', ['entities' => $pagination,
+            'message' => $errorMessage,
             'province' => $province,
             'zona' => $zona,
             'type' => $type,
-            's_name'=>$s_name,
-            's_zona'=>$s_zona,
-            's_type'=>$s_type,
-            's_province'=>$s_province,
-            'document_id'=>$document_id]);
+            's_name' => $s_name,
+            's_zona' => $s_zona,
+            's_type' => $s_type,
+            's_province' => $s_province,
+            'document_id' => $document_id]);
     }
-    
+
     /**
      * New User entities.
      *
@@ -77,13 +78,13 @@ class UserController extends Controller
      */
     public function newUserAction(Request $request)
     {
-        $user  = new User();
-        $form  = $this->createCreateForm($user);
-        $type  = 'new';
+        $user = new User();
+        $form = $this->createCreateForm($user);
+        $type = 'new';
         $label = '    CREAR    ';
-        return $this->forward('AppBundle:User:form', ['form'=>$form, 'user'=>$user, 'label'=>$label, 'type'=>$type]);
+        return $this->forward('AppBundle:User:form', ['form' => $form, 'user' => $user, 'label' => $label, 'type' => $type]);
     }
-    
+
     /**
      * Edit User entities.
      *
@@ -93,29 +94,29 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:User')->findOneById($id);
-        
-        $form  = $this->createEditForm($user, $id);
-        $type  = 'edit';
+
+        $form = $this->createEditForm($user, $id);
+        $type = 'edit';
         $label = '    EDITAR    ';
-        return $this->forward('AppBundle:User:form', ['form'=>$form, 'user'=>$user, 'label'=>$label, 'type'=>$type, 'sendMail' => false]);
-        
+        return $this->forward('AppBundle:User:form', ['form' => $form, 'user' => $user, 'label' => $label, 'type' => $type, 'sendMail' => false]);
+
     }
-    
-    
+
+
     /**
      * form User entities.
      *
      */
     public function formAction(Request $request, $form, $user, $label, $type)
     {
-        if($request->isMethod('POST')){
+        if ($request->isMethod('POST')) {
             $form->handleRequest($request);
 
             if ($form->isValid()) {
                 $sendMail = $request->get('sendMail', true);
-                
+
                 $data = $request->get('user_appbundle_user');
-                
+
                 $em = $this->getDoctrine()->getManager();
                 $user->addRole("ROLE_CUSTOMER");
                 $user->setUsername($data['email']);
@@ -125,30 +126,30 @@ class UserController extends Controller
                 $em->persist($user);
                 $em->flush();
 
-                if($sendMail) {
+                if ($sendMail) {
                     $message = \Swift_Message::newInstance()
-                        ->setSubject('Recupera tu cuenta')
+                        ->setSubject('Bienvenido al sistema para clientes de Gapp')
                         ->setTo($user->getEmail())
                         ->setFrom('no-reply@gapp.com')
                         ->setBody(
                             $this->renderView(
                                 'AppBundle:Emails:registration.html.twig',
-                                array('email' => $user->getEmail(), 'password'=>$data['plainPassword'])
+                                array('email' => $user->getEmail(), 'password' => $data['plainPassword'])
                             ),
                             'text/html'
                         );
                     $this->get('mailer')->send($message);
                 }
-                
+
                 $this->get('session')->getFlashBag()->set('update_info', 'Se actualizó el registro');
                 return $this->redirect($this->generateUrl('user_list'));
             }
         }
-        return $this->render('AppBundle:User:form.html.twig', ['form'=>$form->createView(), 'label'=>$label, 'type'=>$type]);
+        return $this->render('AppBundle:User:form.html.twig', ['form' => $form->createView(), 'label' => $label, 'type' => $type]);
     }
-    
+
     /**
-     * 
+     *
      * Delete User entities.
      *
      * @Route("/{id}/delete", name="user_delete")
@@ -157,26 +158,28 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:User')->findOneById($id);
-        
-        if(!$user){return $this->redirect($this->generateUrl('user_list'));}
-        
-        foreach ($user->getDocument() AS $user_document){
+
+        if (!$user) {
+            return $this->redirect($this->generateUrl('user_list'));
+        }
+
+        foreach ($user->getDocument() AS $user_document) {
             $user->removeDocument($user_document);
             $user_document->removeUser($user);
             $em->persist($user_document);
             $em->persist($user);
             $em->flush();
         }
-        
+
         $em->remove($user);
         $em->flush();
-        
+
         $this->get('session')->getFlashBag()->set('delete_info', 'Se elimino el registro');
-        
+
         return $this->redirect($this->generateUrl('user_list'));
     }
-    
-    
+
+
     /**
      * Creates a form to create a User entity.
      *
@@ -184,7 +187,8 @@ class UserController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(User $entity) {
+    private function createCreateForm(User $entity)
+    {
         $form = $this->createForm(new UserType('user_userbundle_user'), $entity, array(
             'action' => $this->generateUrl('user_new'),
             'method' => 'POST',
@@ -196,14 +200,14 @@ class UserController extends Controller
                 'attr' => array(
                     "class" => "celda3",
                     "maxlength" => 32,
-                    "autocomplete"=>"off"
+                    "autocomplete" => "off"
                 )
             )
         );
-        
+
         return $form;
     }
-    
+
     /**
      * Creates a form to edit a User entity.
      *
@@ -211,9 +215,10 @@ class UserController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createEditForm(User $entity, $id) {
+    private function createEditForm(User $entity, $id)
+    {
         $form = $this->createForm(new UserType('user_userbundle_user'), $entity, array(
-            'action' => $this->generateUrl('user_edit', ['id'=>$id]),
+            'action' => $this->generateUrl('user_edit', ['id' => $id]),
             'method' => 'POST',
         ));
 

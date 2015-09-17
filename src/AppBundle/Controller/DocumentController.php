@@ -151,7 +151,7 @@ class DocumentController extends Controller
         $document = $em->getRepository('AppBundle:Document')->findOneById($id);
 
         if (!$document) {
-            return $this->redirect($this->generateUrl('document_list'));
+            return $this->redirect($this->generateUrl('doc_list'));
         }
 
         foreach ($document->getUsers() AS $user_document) {
@@ -167,7 +167,7 @@ class DocumentController extends Controller
 
         $this->get('session')->getFlashBag()->set('delete_info', 'Se elimino el registro');
 
-        return $this->redirect($this->generateUrl('document_list'));
+        return $this->redirect($this->generateUrl('doc_list'));
     }
 
     /**
@@ -182,7 +182,7 @@ class DocumentController extends Controller
         $document = $em->getRepository('AppBundle:Document')->findOneById($id);
 
         if (!$document) {
-            return $this->redirect($this->generateUrl('document_list'));
+            return $this->redirect($this->generateUrl('doc_list'));
         }
 
         $document->setEnable(0);
@@ -192,7 +192,7 @@ class DocumentController extends Controller
 
         $this->get('session')->getFlashBag()->set('delete_info', 'Se actualizo el registro');
 
-        return $this->redirect($this->generateUrl('document_list'));
+        return $this->redirect($this->generateUrl('doc_list'));
     }
 
     /**

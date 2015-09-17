@@ -111,9 +111,11 @@ class UserType extends AbstractType {
                     'web', 'text', array(
                         'label' => 'Web',
                         "mapped" => true,
+                        "required" => false,
                         'attr' => array(
                             "class" => "celda3 UrlType",
-                            "maxlength" => 32 //Longitud máxima
+                            "maxlength" => 32 //Longitud máxima,
+
                         )
                     )
                 )
@@ -128,7 +130,6 @@ class UserType extends AbstractType {
                         )
                     )
                 )
-            )
             ->add(
                 'activity', 'text', array(
                     'label' => 'Actividad',
@@ -139,7 +140,9 @@ class UserType extends AbstractType {
                         "maxlength" => 32, //Longitud máxima,
                         "autocomplete" => 'off'
                     )
-                );
+                )
+            )
+        ;
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver) {

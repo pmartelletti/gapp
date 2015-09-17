@@ -58,7 +58,7 @@ class FrontendController extends Controller
     }
     
     /**
-     * @Route("/document", name="member_document")
+     * @Route("/document", name="members_document")
      */
     public function getDocumentByUserAction(Request $request)
     {
@@ -77,7 +77,7 @@ class FrontendController extends Controller
     public function profileAction(Request $request)
     {
          $em = $this->getDoctrine()->getManager();
-         $user = $this->container->get('security.context')->getToken()->getUser();
+         $user = $this->getUser();
          
          $user_object = $em->getRepository('AppBundle:User')->findOneById($user->getId());
          
@@ -94,9 +94,9 @@ class FrontendController extends Controller
                  
                  $em->persist($user_object);
                  $em->flush();
-                 
-                 $this->get('session')->getFlashBag()->set('update_info', 'Se envio un email con su nueva contraseña!!');
-                 return $this->redirect($this->generateUrl('_login'));
+
+                 $this->get('session')->getFlashBag()->add('notice', 'Su perfil ha sido modificado correctamente');
+                 return $this->redirectToRoute('members_document');
              }
          }
          return $this->render('AppBundle:Frontend:profile.html.twig', ['form'=>$form->createView()]);  

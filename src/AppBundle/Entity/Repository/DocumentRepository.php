@@ -21,7 +21,7 @@ class DocumentRepository extends EntityRepository {
        
         $q = $this->createQueryBuilder('d')
              ->leftJoin('d.users', 'u')
-             ->where('u.id = :id_user')
+             ->andWhere('u.id = :id_user')
              ->andWhere('d.id = :id_document')
              ->setParameter('id_user', $id_user)
              ->setParameter('id_document', $id_documnet) ;
@@ -55,8 +55,11 @@ class DocumentRepository extends EntityRepository {
     {
          $q = $this->createQueryBuilder('d')
              ->leftJoin('d.users', 'u')
-             ->where('u.id = :id_user')
-             ->setParameter('id_user', $user_id)    ;
+             ->andWhere('u.id = :id_user')
+             ->andWhere('d.enable = :yes')
+             ->setParameter('yes', true)
+             ->setParameter('id_user', $user_id)
+         ;
              
          
          return $q->getQuery()->getResult();

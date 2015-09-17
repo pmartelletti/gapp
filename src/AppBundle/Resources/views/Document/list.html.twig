@@ -107,7 +107,7 @@
                                         <img src="{{ asset('bundles/app/images/front/'~entity.getImgType()) }}" width="25" height="25">
                                     </div>
                                 </td>
-                                <td width="372" class="textobaseVerdeB">{{ entity.name | capitalize }}</td>
+                                <td width="372" class="textobaseVerdeB">{{ entity.name | capitalize }} {% if not entity.enable %}<span style="color: red">(suspendido)</span>{% endif %}</td>
                                 <td width="20">&nbsp;</td>
                                 <td width="75" class="textoBase"><div align="center">{{ entity.size // 1000 }}KB </div></td>
                                 <td width="75">
