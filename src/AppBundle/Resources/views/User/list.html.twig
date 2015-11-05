@@ -130,12 +130,12 @@
                               </div></td>
                               <td width="150" class="textoBase">{{ entity.lastname | capitalize }} {{ entity.firstname | capitalize }} <br></td>
                               <td width="6" class="textoBase">&nbsp;</td>
-                              <td width="89"><span class="textoBase">{{ zona[entity.zona] }}</span></td>
+                              <td width="89"><span class="textoBase">{{ entity.zona in zona ? zona[entity.zona] : entity.zona }}</span></td>
                               <td width="120" class="textoBase">{{ province[entity.province] }}</td>
                               <td width="15">&nbsp;</td>
                               <td width="225"><a href="mailto:{{ entity.email }}" class="linkverdana11Gris2">{{ entity.email }}</a></td>
                               <td width="17">&nbsp;</td>
-                              <td width="96" class="textoBase">{{ type[entity.types] }}</td>
+                              <td width="96" class="textoBase">{{ entity.types in type ? type[entity.types] : entity.types }}</td>
                               <td width="65">
                                   <div align="center">
                                       <a href="{{ path('user_edit', {'id': entity.id})}}">

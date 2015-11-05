@@ -47,10 +47,12 @@ class Commons
     {
         $zona = [
             '' => $value_null,
-            'Cuyo' => 'Cuyo',
+            'CABA y GBA' => 'CABA y GBA',
             'Patagonia' => 'Patagonia',
-            'Noroeste' => 'Noroeste',
-            'Litoral' => 'Litoral'
+            'NEA' => 'NEA',
+            'NOA' => 'NOA',
+            'PAMPA' => 'PAMPA',
+            'CUYO' => 'CUYO',
         ];
 
         return $zona;
@@ -67,10 +69,13 @@ class Commons
             $type[''] = $value_null;
         }
 
-        $type += ['cliente' => 'Cliente',
-            'distribuidor' => 'Distribuidor',
-            'redistribuidor' => 'Redistribuidor',
-            'otro' => 'Otro'];
+        $type += [
+            'cliente' => 'Clientes',
+            'clientes_especiales' => 'Clientes Especiales',
+            'distribuidores' => 'Distribuidores',
+            'asp' => 'ASP',
+            'otro' => 'Otro'
+        ];
 
         return $type;
     }
