@@ -51,12 +51,14 @@ class DocumentRepository extends EntityRepository {
      * @param int $user_id
      * @return object
      */
-    public function getDocumentByUserId($user_id)
+    public function getDocumentByUserId($user_id, $listado)
     {
          $q = $this->createQueryBuilder('d')
              ->leftJoin('d.users', 'u')
              ->andWhere('u.id = :id_user')
              ->andWhere('d.enable = :yes')
+             ->andWhere('d.listado = :listado')
+             ->setParameter('listado', $listado)
              ->setParameter('yes', true)
              ->setParameter('id_user', $user_id)
          ;

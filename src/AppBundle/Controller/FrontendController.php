@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Document;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,10 +66,11 @@ class FrontendController extends Controller
         $user = $this->container->get('security.context')->getToken()->getUser();
         
         $em = $this->getDoctrine()->getManager();
+
+        $documentosComercial = $em->getRepository('AppBundle:Document')->getDocumentByUserId($user->getId(), Document::LISTADO_COMERCIAL);
+        $documentosTecnica = $em->getRepository('AppBundle:Document')->getDocumentByUserId($user->getId(), Document::LISTADO_TECNICA);
         
-        $document = $em->getRepository('AppBundle:Document')->getDocumentByUserId($user->getId());
-        
-        return $this->render('AppBundle:Frontend:document.html.twig', ['document'=>$document]); 
+        return $this->render('AppBundle:Frontend:document.html.twig', ['document_comercial'=>$documentosComercial, 'document_tecnica' => $documentosTecnica]);
     }
     
     /**

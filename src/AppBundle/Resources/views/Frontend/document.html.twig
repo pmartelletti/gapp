@@ -7,7 +7,33 @@
 {% block body %}
 <div class="container cart">
     <div class="sixteen columns">
-        {% if document %}
+        <h3>Area Tecnica</h3>
+        {% if document_tecnica %}
+            <!-- Cart -->
+            <table class="cart-table responsive-table">
+                <tr>
+                    <th width="7%">Tipo</th>
+                    <th width="70%"> Nombre</th>
+                    <th width="11%">Peso</th>
+                    <th width="12%">Ver</th>
+                </tr>
+                {% for entity in document_tecnica %}
+                    <!-- Item #1 -->
+                    <tr>
+                        <td><img src="{{ asset('bundles/app/images/front/'~entity.getImgType()) }}" alt=""/></td>
+                        <td class="cart-title"><a>{{ entity.name | capitalize }}</a></td>
+                        <td>{{ entity.size // 1000 }} KB</td>
+                        <td><a target="_blanck" href="{{ asset('uploads/documents/'~entity.getPath()) }}" class="button color"></i>VER</a></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            No hay documentos registrados
+        {% endif %}
+
+
+        <h3>Area Comercial</h3>
+        {% if document_comercial %}
         <!-- Cart -->
         <table class="cart-table responsive-table">
             <tr>
@@ -16,7 +42,7 @@
                     <th width="11%">Peso</th>
                     <th width="12%">Ver</th>
             </tr>
-            {% for entity in document%}
+            {% for entity in document_comercial %}
             <!-- Item #1 -->
             <tr>
                     <td><img src="{{ asset('bundles/app/images/front/'~entity.getImgType()) }}" alt=""/></td>
