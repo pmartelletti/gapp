@@ -34,6 +34,13 @@ class DocumentType extends AbstractType {
                         )
                     )
                 )
+                ->add('listado', 'choice', [
+                    'choices' => [
+                        Document::LISTADO_TECNICA => 'Area Tecnica',
+                        Document::LISTADO_COMERCIAL => 'Area Comercial'
+                    ],
+                    'label' => 'Listado'
+                ])
             ;
     }    
     

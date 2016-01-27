@@ -13,6 +13,9 @@ use AppBundle\Utils\Commons;
  */
 class Document
 {
+    const LISTADO_TECNICA = 'area_tecnica';
+    const LISTADO_COMERCIAL = 'area_comercial';
+
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
@@ -85,6 +88,11 @@ class Document
      * @ORM\JoinTable(name="users_document")
      **/
     private $users;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $listado;
 
     public function __construct() {
         $this->users = new \Doctrine\Common\Collections\ArrayCollection();
@@ -460,5 +468,24 @@ class Document
     public function getImgType()
     {
         return $this->img_type;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getListado()
+    {
+        return $this->listado;
+    }
+
+    /**
+     * @param mixed $listado
+     *
+     * @return $this
+     */
+    public function setListado($listado)
+    {
+        $this->listado = $listado;
+        return $this;
     }
 }
