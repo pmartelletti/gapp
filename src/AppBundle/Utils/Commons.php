@@ -48,11 +48,11 @@ class Commons
         $zona = [
             '' => $value_null,
             'CABA y GBA' => 'CABA y GBA',
+            'CUYO' => 'CUYO',
+            'PAMPA' => 'PAMPA',
             'Patagonia' => 'Patagonia',
             'NEA' => 'NEA',
-            'NOA' => 'NOA',
-            'PAMPA' => 'PAMPA',
-            'CUYO' => 'CUYO',
+            'NOA' => 'NOA'
         ];
 
         return $zona;
