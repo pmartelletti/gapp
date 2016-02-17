@@ -133,7 +133,7 @@ class UserController extends Controller
                         ->setBody(
                             $this->renderView(
                                 'AppBundle:Emails:registration.html.twig',
-                                array('email' => $user->getEmail(), 'password' => $data['plainPassword'])
+                                array('nombre' => $user->getNameCompleted(),'email' => $user->getEmail(), 'password' => $data['plainPassword'])
                             ),
                             'text/html'
                         );

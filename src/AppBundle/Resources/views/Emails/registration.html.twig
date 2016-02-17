@@ -1,8 +1,54 @@
-<h3>Tus datos fueron creados en gapp.com</h3>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Untitled Document</title>
+    <style type="text/css">
+        .borde {
+            border-collapse: collapse;
+            border: 14px solid #cfd2c1;
+        }
+        a {
+            color: #FFFFFF;
+        }
+        a:visited {
+            color: #FFFFFF;
+        }
+        a:active {
+            color: #FFFFFF;
+        }
+        a:hover {
+            color: #FFFFFF;
+        }
+    </style>
+</head>
 
-<h4>Usuario: {{ email }}</h4>
-<h4>contraseña: {{ password }}</h4>
-
-Para iniciar sesión: <a href="{{ url('members_login') }}">Click aquí</a>.
-
-Gracias!!
+<body>
+<table width="498"	 align="center" cellpadding="0" cellspacing="0" class="borde">
+    <tr>
+        <td align="center" bgcolor="#daddce" style="font-family: Arial, Helvetica, sans-serif; font-size: medium; color: #565A5D"><p>&nbsp;</p>
+            <p><img src="GAPP.jpg" width="211" height="63" /></p>
+            <p><img src="imagen.jpg" width="469" height="162" /></p>
+            <p style="font-size: x-large; font-weight: 700; color: #10693C">&nbsp;<br />
+                Bienvenido/a {{ nombre }}<br />
+                al Área Privada de la web de GAPP!</p>
+            <p style="font-size: small">DESDE NUESTRA ÁREA PRIVADA TENDRÁS ACCESO A:</p>
+            <p>1. Listas de precios actualizadas<br />
+                2. Invitaciones especiales a eventos<br />
+                3. Novedades técnicas y más…</p>
+            <p>---------------------------</p>
+            <p style="font-size: small">TUS DATOS DE ACCESO SON</p>
+            <p style="font-weight: 700; font-size: medium; color: #10693C">USUARIO:{{ email }}<br />
+                CONTRASEÑA: {{ password }}</p>
+            <p style="font-weight: 700; font-size: medium; color: #10693C">&nbsp;</p>
+            <table width="40%" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td height="30" align="center" bgcolor="#FF0000" style="font-weight: 700; color: #FFFFFF"><a href="{{ url('members_login') }}" target="_blank">INGRESAR</a></td>
+                </tr>
+            </table>
+            <p style="font-weight: 700; font-size: medium; color: #10693C">&nbsp;</p>
+        </td>
+    </tr>
+</table>
+</body>
+</html>

@@ -156,8 +156,8 @@
                 var holder = $(this).attr('name');
                 var button = $(this).val();
                 $(this).find('option:selected').attr('disabled', 'disabled');
-                var url = '/administrador/user/list?' + holder+ '=' + button;
-//                var url = '/area-privada/administrador/user/list?' + holder+ '=' + button;
+//                var url = '/administrador/user/list?' + holder+ '=' + button;
+                var url = '/area-privada/administrador/user/list?' + holder+ '=' + button;
                 $.get(url, function(options) {
                     var values = options.concat($('#multiselect_to').val());
                     $('#multiselect_to').val(values).trigger('change');
